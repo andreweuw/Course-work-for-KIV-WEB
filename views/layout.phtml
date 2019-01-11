@@ -3,15 +3,15 @@
         <head>
                 <base href="/localhost" />
                 <meta charset="UTF-8" />
-                <title><?php echo $title ?></title>
-                <meta name="description" content="<?php echo $description ?>" />
-                <meta name="keyWords" content="<?php echo $keyWords ?>" />
+                <title><?= $title ?></title>
+                <meta name="description" content="<?= $description ?>" />
+                <meta name="keywords" content="<?= $keywords ?>" />
                 <link rel="stylesheet" href="style.css" type="text/css"/>
         </head>
 
         <body>
                 <header>
-                        <h1>Česká jazyková konference 2020</h1>
+                        <h1>ITnetworkMVC - ukázkový web</h1>
                 </header>
 
                 <nav>
@@ -25,10 +25,12 @@
 
                 <article>
 
+                <?php $this->controller->printView(); ?>
+                
                 </article>
 
                 <footer>
-                        <p>Patička.</p>
+                        <p>Patička</p>
                 </footer>
         </body>
 </html>

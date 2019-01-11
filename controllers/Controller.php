@@ -1,16 +1,16 @@
 <?php
+abstract class Controller {
 
-abstract class AController {
     protected $data = array();
     protected $view = "";
-    protected $header = array('header' => '', 'keyWords' => '', 'description' => '');
+    protected $header = array('title' => '', 'description' => '', 'keywords' => '');
 
-    abstract function processParams($params);
+    abstract function process($params);
 
     public function printView() {
         if ($this->view) {
-                extract($this->data);
-                require("views/" . $this->vire . ".phtml");
+            extract($this->data);
+            require("views/" . $this->view . ".phtml");
         }
     }
 
@@ -19,4 +19,5 @@ abstract class AController {
         header("Connection: close");
         exit;
     }
+
 }
