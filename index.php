@@ -13,9 +13,7 @@ function autoLoad($class)
 
 spl_autoload_register("autoLoad");
 
-
 DBWrapper::connect("127.0.0.1", "root", "", "web-db");
-
 
 $router = new RouterController();
 $router->process(array($_SERVER['REQUEST_URI']));

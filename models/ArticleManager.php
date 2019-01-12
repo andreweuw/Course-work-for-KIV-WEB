@@ -11,8 +11,8 @@ class ArticleManager {
         ', array($url));
     }
 
-    public function getArticles($url) {
-        return DBWrapper::getAll('
+    public function getArticles() {
+        return DBWrapper::getAllRows('
             SELECT `clanky_id`, `titulek`, `url`, `popisek`
             FROM `clanky`
             ORDER BY `clanky_id` DESC
