@@ -1,5 +1,6 @@
 <?php
 mb_internal_encoding("UTF-8");
+session_start();// PHP starts sending cookies with the id of the user relation
 
 function autoLoad($class)
 {

@@ -81,3 +81,9 @@ textarea {
     width: 483px;
     height: 90px;
 }
+
+.message {
+    border: 1px solid #9DC2F8;
+    background: #DBE8F8;
+    padding: 3px;
+}

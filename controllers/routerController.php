@@ -26,7 +26,8 @@ class RouterController extends Controller {
         $this->data['description'] = $this->controller->header['description'];
         $this->data['keywords'] = $this->controller->header['keywords'];
         $this->view = 'layout';
-
+        
+        $this->data['messages'] = $this->getMessages();
     }
 
     private function parseURL($url) {

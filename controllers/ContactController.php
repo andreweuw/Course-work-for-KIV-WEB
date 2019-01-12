@@ -9,13 +9,18 @@ class ContactController extends Controller {
             'keywords' => 'kontakt, email, formulář'
         );
 
-        if (isset($_POST["email"])) {
-            if ($_POST['year'] == date("Y")) {
+        if ($_POST) {
+            try {
                 $emailSender = new EmailSender();
-                $emailSender->send("ondrejhavlicek98@gmail.com", "Ohlas z webu", $_POST['message'], $_POST['email']);
+                $emailSender->sendWithAntiSpam($_POST['year'], "ondrejhavlicek98@gmail.com", "Ohlas z webu", $_POST['message'], $_POST['email']);
+                $this->addMessage('Email byl úspěšně odeslán.');
+                $this->redirect('contact');
+            }
+            catch (UserError $error) {
+                $this->addMessage($error->getMessage());
             }
         }
-
+        
         $this->view = 'contact';
     }
 }

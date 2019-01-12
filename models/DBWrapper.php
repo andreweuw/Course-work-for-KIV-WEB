@@ -60,4 +60,24 @@ class DBWrapper {
         $return->execute($params);
         return $return->rowCount();
     }
+
+    public static function add($table, $params = array()) {
+        return self::query("INSERT INTO `$table` (`".
+                            implode('`, `', array_keys($params)).
+                            "`) VALUES (".str_repeat('?,', sizeOf($params)-1)."?)",
+                            array_values($params)
+        );
+    }
+
+    public static function alter($table, $values = array(), $condition, $params = array()) {   
+        return self::query("UPDATE `$table` SET `".
+                            implode('` = ?, `', array_keys($values)).
+                            "` = ? " . $condition,
+                            array_merge(array_values($values), $params)
+        );
+    }
+
+    public static function getLastId() {
+        return self::$connection->lastInsertedId();
+    }
 }
