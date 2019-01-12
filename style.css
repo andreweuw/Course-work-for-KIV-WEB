@@ -1,89 +1,57 @@
-body {
-    font-family: verdana;
-    font-size: 14px;
-    width: 900px;
-    margin: 0 auto;
+html{
+    background: #BFD8D2;
 }
 
-h1 {
-    text-align: center;
-    color: #444444;
-    text-shadow: 3px 3px 3px #aaaaaa;
+footer{
+    background-image: linear-gradient(#FEDCD2 60%, #BFD8D2);
+    color: black;
+    padding-top: 10px;
+    padding-bottom: 300px;
 }
 
-footer {
-    font-size: 11px;
-    text-align: center;
-    padding-top: 20px;
+header{
+    background: #BFD8D2;
 }
 
-article {
-    text-shadow: 3px 3px 3px #aaaaaa;
-}
-
-nav ul {
-    list-style-type: none;
-}
-
-nav li {
-    float: left;
-    margin-right: 15px;
-}
-
-nav a {
-    background: #6FA4F8;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 10px;
+a{
+    color: black;
+    padding: 5px 5px;
     text-decoration: none;
+    cursor: pointer;
     border: none;
-    cursor: pointer;
 }
-
-nav a:hover {
-    background: #2976f8;
-    color: #EEEEEE;
+a:hover, a:active, a:focus{
     text-decoration: none;
+    color: #DF744A;
 }
 
-input[type="submit"] {
-    background: #6FA4F8;
+.btn-default{
+    background: #DF744A;
     color: white;
-    padding: 5px 10px;
-    border-radius: 10px;
-    border: 0px;
+    border: none;
+    box-shadow: 0px 3px 0px 0px #888888;
 }
 
-input[type="submit"]:hover {
-    background: #2976f8;
-    color: #EEEEEE;
-    cursor: pointer;
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default{
+    background: #FEDCD2 !important;
+    color: black !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-align: center;
 }
 
-input[type="text"], input[type="email"], input[type="password"] {
-    width: 250px;
-    border-radius: 5px;
-    border: 1px solid #aaaaaa;
-    padding: 0.3em;
+.blockquote-footer, .blockquote{
+    text-align: justify;
 }
 
-input[type="submit"] {
-    padding: 10px 25px;
+.center{
     display: block;
-    margin: 0 auto;
-    margin-top: 20px;
-    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }
 
-textarea {
-    border-radius: 5px;
-    border: 1px solid #aaaaaa;
-    width: 483px;
-    height: 90px;
-}
-
-.message {
-    border: 1px solid #9DC2F8;
-    background: #DBE8F8;
-    padding: 3px;
+hr{
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
 }

@@ -7,17 +7,20 @@ class AdministrationController extends Controller
         // Do administrace mají přístup jen přihlášení uživatelé
         $this->verifyUser();
         // Hlavička stránky
-        $this->header['title'] = 'Přihlášení';
+        $this->header = array(
+            'title' => 'Administrace',
+            'description' => 'Na této stránce může uživatel využívat pravomoce.',
+            'keywords' => 'uzivatel, user, admin, editation');
         // Získání dat o přihlášeném uživateli
         $userManager = new UserManager();
         if (!empty($params[0]) && $params[0] == 'logout') {
             $userManager->logout();
-            $this->redirect('login');
+            $this->redirect('home');
         }
         $user = $userManager->getUser();
-        $this->data['name'] = $user['name'];
+        $this->data['username'] = $user['username'];
         $this->data['admin'] = $user['admin'];
         // Nastavení šablony
-        $this->pohled = 'administration';
+        $this->view = 'administration';
     }
 }

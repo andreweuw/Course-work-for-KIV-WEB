@@ -8,7 +8,7 @@ class RouterController extends Controller {
         $parsedURL = $this->parseURL($params[0]);
 
         if (empty($parsedURL[0])) {
-            $this->redirect('clanek/uvod');
+            $this->redirect('article/uvod');
         }
         
         $controllerClass = $this->dashToCamel(array_shift($parsedURL)) . 'Controller';
@@ -25,9 +25,12 @@ class RouterController extends Controller {
         $this->data['title'] = $this->controller->header['title'];
         $this->data['description'] = $this->controller->header['description'];
         $this->data['keywords'] = $this->controller->header['keywords'];
-        $this->view = 'layout';
-        
         $this->data['messages'] = $this->getMessages();
+
+        $userManager = new UserManager();
+        $user = $userManager->getUser();
+        $this->data['curUsername'] = $user['username'];
+        $this->view = 'layout';
     }
 
     private function parseURL($url) {

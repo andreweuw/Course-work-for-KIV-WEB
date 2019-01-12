@@ -4,21 +4,25 @@ class EditorController extends Controller {
 
     public function process($params) {
         $this->verifyUser(true);
-        $this->header['title'] = 'Editor článků';
+        $this->header = array(
+            'title' => 'Editor článků',
+            'description' => 'Tato stránka je určena k editaci a vytváření článků.',
+            'keywords' => 'editace, edit, article, článek, admin');
+
         $articleManager = new ArticleManager();
         // Expecting to edit a new article
         $article = array(
-            'clanky_id' => '',
-            'titulek' => '',
-            'obsah' => '',
+            'article_id' => '',
+            'title' => '',
+            'content' => '',
             'url' => '',
-            'popisek' => '',
-            'klicova_slova' => '',
+            'description' => '',
+            'keywords' => '',
         );
         // Je odeslán formulář
         if ($_POST) {
             // Získání článku z $_POST
-            $keys = array('titulek', 'obsah', 'url', 'popisek', 'klicova_slova');
+            $keys = array('title', 'content', 'url', 'description', 'keywords');
             $article = array_intersect_key($_POST, array_flip($keys));
             // Uložení článku do DB
             $articleManager->saveArticle($_POST['clanky_id'], $article);

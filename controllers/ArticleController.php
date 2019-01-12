@@ -22,13 +22,13 @@ class ArticleController extends Controller {
             }
 
             $this->header = array(
-                'title' => $article['titulek'],
-                'description' => $article['popisek'],
-                'keywords' => $article['klicova_slova']
+                'title' => $article['title'],
+                'description' => $article['description'],
+                'keywords' => $article['keywords']
             );
 
-            $this->data['title'] = $article['titulek'];
-            $this->data['content'] = $article['obsah'];
+            $this->data['title'] = $article['title'];
+            $this->data['content'] = $article['content'];
 
             $this->view = 'article';
         }

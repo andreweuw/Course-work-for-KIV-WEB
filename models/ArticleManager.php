@@ -5,8 +5,8 @@ class ArticleManager {
     
     public function getArticle($url) {
         return DBWrapper::getRow('
-            SELECT `clanky_id`, `titulek`, `obsah`, `url`, `popisek`, `klicova_slova`
-            FROM `clanky`
+            SELECT `article_id`, `title`, `content`, `url`, `description`, `keywords`
+            FROM `articles`
             WHERE `url` = ?
             ', array($url)
         );
@@ -14,24 +14,24 @@ class ArticleManager {
 
     public function getArticles() {
         return DBWrapper::getAllRows('
-            SELECT `clanky_id`, `titulek`, `url`, `popisek`
-            FROM `clanky`
-            ORDER BY `clanky_id` DESC
+            SELECT `article_id`, `title`, `url`, `description`
+            FROM `articles`
+            ORDER BY `article_id` DESC
         ');
     }
 
     public function saveArticle($id, $article) {
         if (!id) {
-            DBWrapper::add('clanky', $article);
+            DBWrapper::add('articles', $article);
         }
         else {
-            DBWrapper::alter('clanky', $article, 'WHERE clanky_id = ?', array($id));
+            DBWrapper::alter('articles', $article, 'WHERE article_id = ?', array($id));
         }
     }
 
     public function removeArticle($url) {
         DBWrapper::query('
-                    DELETE FROM clanky
+                    DELETE FROM articles
                     WHERE url = ?
                     ', array($url)
         );

@@ -7,7 +7,7 @@ class EmailSender {
         $header .= "\nMIME-Version: 1.0\n";
         $header .= "Content-Type: text/html; charset=\"utf-8\"\n";
         if (mb_send_mail($toWhom, $subject, $message, $header)) {
-            throw new UserException('Email se nepodařilo odeslat.');
+            throw new UserError('Email se nepodařilo odeslat.');
         }
     }
 

@@ -1,7 +1,11 @@
-<p>Vítejte v administraci, jste přihlášeni jako <?= $name ?></p>
+<h2>Vítejte v administraci</h2>
+<hr>
+<p>
+        jste přihlášeni jako <?= $username ?>
+</p>
 <?php if (!$admin) : ?>
         <p>Nemáte administrátorská oprávnění, požádejte administrátora webu, aby vám je přidělil.</p>
 <?php endif ?>
-<h2><a href="editor">Editor článků</a></h2>
-<h2><a href="article">Seznam článků</a></h2>
-<h2><a href="administration/logout">Odhlásit</a></h2>
+<h2><a href="editor" class="btn btn-default" role="button">Editor článků</a></h2>
+<h2><a href="article" class="btn btn-default" role="button">Seznam článků</a></h2>
+<h2><a href="administration/logout" class="btn btn-default" role="button">Odhlásit</a></h2><br />

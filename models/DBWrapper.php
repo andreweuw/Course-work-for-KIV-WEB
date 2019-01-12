@@ -30,18 +30,18 @@ class DBWrapper {
      * Returns one single row of the database
      */
     public static function getRow($query, $params = array()) {
-        $return = self::$connection->prepare($query);
-        $return->execute($params);
-        return $return->fetch();
+        $ret = self::$connection->prepare($query);
+        $ret->execute($params);
+        return $ret->fetch();
     }
 
     /**
      * Returns all the rows of the database
      */
     public static function getAllRows($query, $params = array()) {
-        $return = self::$connection->prepare($query);
-        $return->execute($params);
-        return $return->fetchAll();
+        $ret = self::$connection->prepare($query);
+        $ret->execute($params);
+        return $ret->fetchAll();
     }
 
     /**
@@ -55,10 +55,10 @@ class DBWrapper {
     /**
      * Returns te number of edited rows
      */
-    public static function getEditedCount($query, $params = array()) {
-        $return = self::$connection->prepare($query);
-        $return->execute($params);
-        return $return->rowCount();
+    public static function query($query, $params = array()) {
+        $ret = self::$connection->prepare($query);
+        $ret->execute($params);
+        return $ret->rowCount();
     }
 
     public static function add($table, $params = array()) {

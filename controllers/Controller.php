@@ -67,7 +67,7 @@ abstract class Controller {
     public function verifyUser($admin = false) {
         $userManager = new UserManager();
         $user = $userManager->getUser();
-        if (!$user || (!admin && !$user['admin'])) {
+        if (!$user || ($admin && !$user['admin'])) {
             $this->addMessage('Je nám líto, ale k této akci nemáte dostatečná oprávnění.');
             $this->redirect('login');
         }

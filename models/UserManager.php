@@ -16,26 +16,27 @@ class UserManager {
             throw new UserError('Zadaná hesla spolu nesouhlasí.');
         }
         $user = array(
-            'name' => $name,
-            'pass' => $this->getHash($pass)
+            'username' => $name,
+            'password' => $this->getHash($pass)
         );
         try {
-            DBWrapper::add('uzivatele', $user);
+            DBWrapper::add('users', $user);
         }
         catch (PDOException $error) {
+            echo $error;
             throw new UserError('Uživatel s tímto jménem již v systému existuje.');
         }
     }
 
     public function login($name, $pass) {
         $user = DBWrapper::getRow('
-                SELECT uzivatele_id, jmeno, admin, heslo
-                FROM uzivatele 
-                WHERE jmeno = ?
+                SELECT user_id, username, password, admin
+                FROM users 
+                WHERE username = ?
                 ', array($name)
         );
-        if (!$user || !password_verify($pass, $user['pass'])) {
-            throw new UserException('Chybně zadané jméno, nebo heslo.');
+        if (!$user || !password_verify($pass, $user['password'])) {
+            throw new UserError('Chybně zadané jméno, nebo heslo.');
         }
         $_SESSION['user'] = $user;
     }

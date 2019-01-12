@@ -5,7 +5,7 @@
         Vaše emailová adresa<br />
         <input type="email" name="email" required="required" value="<?php if (isset($_POST['email'])) echo(htmlspecialchars($_POST['email'])); ?>" /><br />
         Antispam - zadejte aktuální rok<br />
-        <input type="text" name="year" required="required" /><br />
+        <input type="text" name="year" required="required" /><br /><br />
         <textarea name="message"><?php if (isset($_POST['message'])) echo(htmlspecialchars($_POST['message'])); ?></textarea><br />
-        <input type="submit" value="send" />
+        <input class="btn btn-default" role="button" type="submit" value="send" />
 </form>
