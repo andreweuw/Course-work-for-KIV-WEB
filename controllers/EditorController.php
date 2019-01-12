@@ -3,6 +3,7 @@
 class EditorController extends Controller {
 
     public function process($params) {
+        $this->verifyUser(true);
         $this->header['title'] = 'Editor článků';
         $articleManager = new ArticleManager();
         // Expecting to edit a new article

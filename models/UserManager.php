@@ -3,6 +3,8 @@
 class UserManager {
 
     public function getHash($pass) {
+        // Also adds salt (additional random string)
+        // so that the password is not weak.
         return password_hash($pass, PASSWORD_DEFAULT);
     }
 
