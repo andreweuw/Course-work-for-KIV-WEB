@@ -19,7 +19,7 @@ class AdministrationController extends Controller
         }
         $user = $userManager->getUser();
         $this->data['username'] = $user['username'];
-        $this->data['admin'] = $user['admin'];
+        $this->data['status'] = $user['status'];
         // Nastavení šablony
         $this->view = 'administration';
     }

@@ -17,7 +17,8 @@ class UserManager {
         }
         $user = array(
             'username' => $name,
-            'password' => $this->getHash($pass)
+            'password' => $this->getHash($pass),
+            'status' => 'autor'
         );
         try {
             DBWrapper::add('users', $user);
@@ -28,9 +29,26 @@ class UserManager {
         }
     }
 
+    public function raiseRank($id) {
+        $user = DBWrapper::getRow('
+            SELECT user_id, username, password, status
+            FROM users 
+            WHERE user_id = ?
+            ', $id
+        );
+        if ($user['status'] == 'autor') {
+            $nextRank = 'recenzent';
+        } else if ($user['status'] == 'recenzent') {
+            $nextRank = 'administrator';
+        } else if ($user['status'] == 'administrator') {
+            throw new UserError('Uživatel je již administrátorem.');
+        }
+        DBWrapper::update('users');
+    }
+
     public function login($name, $pass) {
         $user = DBWrapper::getRow('
-                SELECT user_id, username, password, admin
+                SELECT user_id, username, password, status
                 FROM users 
                 WHERE username = ?
                 ', array($name)
@@ -50,5 +68,13 @@ class UserManager {
             return $_SESSION['user'];
         }
         return null;
+    }
+
+    public function getAllUsers() {
+        return DBWrapper::getAllRows('
+            SELECT `user_id`, `username`, `password`, `status`
+            FROM `users`
+            ORDER BY `user_id` DESC
+        ');
     }
 }

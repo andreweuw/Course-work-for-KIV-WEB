@@ -80,4 +80,8 @@ class DBWrapper {
     public static function getLastId() {
         return self::$connection->lastInsertedId();
     }
+
+    public static function update($table) {
+        return self::query("UPDATE * FROM `?`", $table);
+    }
 }

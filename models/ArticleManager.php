@@ -3,6 +3,10 @@
 
 class ArticleManager {
     
+    public function addArticle($params = array()) {
+        return DBWrapper::add('articles', $params);
+    }
+
     public function getArticle($url) {
         return DBWrapper::getRow('
             SELECT `article_id`, `title`, `content`, `url`, `description`, `keywords`

@@ -6,7 +6,7 @@ class ArticleController extends Controller {
         $articleManager = new ArticleManager();
         $userManager = new UserManager();
         $user = $userManager->getUser();
-        $this->data['admin'] = $user && $user['admin'];
+        $this->data['status'] = $user && $user['status'];
 
         if (!empty($params[1]) && $params[1] == 'remove') {
             $this->verifyUser(true);

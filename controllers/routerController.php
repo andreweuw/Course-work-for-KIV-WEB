@@ -30,6 +30,7 @@ class RouterController extends Controller {
         $userManager = new UserManager();
         $user = $userManager->getUser();
         $this->data['curUsername'] = $user['username'];
+        $this->data['curStatus'] = $user['status'];
         $this->view = 'layout';
     }
 
