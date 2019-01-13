@@ -10,7 +10,7 @@ class RegistrationController extends Controller {
         if ($_POST) {
             try {
                 $userManager = new UserManager();
-                $userManager->register($_POST['username'], $_POST['password'], $_POST['password_again'], $_POST['year']);
+                $userManager->register($_POST['username'], $_POST['password'], $_POST['password_again']);
                 $userManager->login($_POST['username'], $_POST['password']);
                 $this->addMessage('Registrace proběhla úspěšně!');
                 $this->redirect('administration');

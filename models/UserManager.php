@@ -8,17 +8,15 @@ class UserManager {
         return password_hash($pass, PASSWORD_DEFAULT);
     }
 
-    public function register($name, $pass, $passAgain, $year) {
-        if ($year != date('Y')) {
-            throw new UserError('Špatně vyplněný antispam.');
-        }
+    public function register($name, $pass, $passAgain) {
         if ($pass != $passAgain) {
             throw new UserError('Zadaná hesla spolu nesouhlasí.');
         }
         $user = array(
             'username' => $name,
             'password' => $this->getHash($pass),
-            'status' => 'autor'
+            'status' => 'autor',
+            'blocked' => false
         );
         try {
             DBWrapper::add('users', $user);
@@ -27,29 +25,74 @@ class UserManager {
             echo $error;
             throw new UserError('Uživatel s tímto jménem již v systému existuje.');
         }
-        DBWrapper::update('users');
+    }
+
+    public function block($id, $val) {
+        $controller = new UsersController();
+        if (DBWrapper::query("UPDATE users SET `blocked` = ? WHERE user_id = ?", array($val, $id)) > 0) {
+            $controller->addMessage('Uživatel s id '. $params[1] . ' byl úspěšně blokován');
+        }
+        else {
+            $controller->addMessage('Provádíte zbytečnou operaci, blokování / odblokování nebylo provedeno.');
+        }
+        
     }
 
     public function raiseRank($id) {
+        $controller = new UsersController();
         $user = DBWrapper::getRow('
-            SELECT user_id, username, password, status
+            SELECT user_id, username, password, status, blocked
             FROM users 
             WHERE user_id = ?
-            ', $id
+            ', array($id)
         );
-        if ($user['status'] == 'autor') {
+        $status = $user['status'];
+        if ($status == 'autor') {
             $nextRank = 'recenzent';
-        } else if ($user['status'] == 'recenzent') {
+        } else if ($status == 'recenzent') {
             $nextRank = 'administrator';
-        } else if ($user['status'] == 'administrator') {
-            throw new UserError('Uživatel je již administrátorem.');
+        } else if ($status == 'administrator') {
+            $nextRank = null;
         }
-        DBWrapper::update('users');
+        // public static function alter($table, $values = array(), $condition, $params = array()) {  
+        if ($nextRank) {
+            DBWrapper::query("UPDATE users SET `status` = ? WHERE user_id = ?", array($nextRank, $id));
+            $controller->addMessage('Uživatel s id '. $id . ' byl úspěšně povýšen');
+        }
+        else {
+            $controller->addMessage('Uživatel je již administrátorem.');
+        }
+    }
+
+    public function lowerRank($id) {
+        $controller = new UsersController();
+        $user = DBWrapper::getRow('
+            SELECT user_id, username, password, status, blocked
+            FROM users 
+            WHERE user_id = ?
+            ', array($id)
+        );
+        $status = $user['status'];
+        if ($status == 'administrator') {
+            $nextRank = 'recenzent';
+        } else if ($status == 'recenzent') {
+            $nextRank = 'autor';
+        } else if ($status == 'autor') {
+            $nextRank = null;
+        }
+        // public static function alter($table, $values = array(), $condition, $params = array()) {  
+        if ($nextRank) {
+            DBWrapper::query("UPDATE users SET `status` = ? WHERE user_id = ?", array($nextRank, $id));
+            $controller->addMessage('Uživatel s id '. $id . ' byl úspěšně zbaven dřívější funkce');
+        }
+        else {
+            $controller->addMessage('Uživatel je již autorem.');
+        }
     }
 
     public function login($name, $pass) {
         $user = DBWrapper::getRow('
-                SELECT user_id, username, password, status
+                SELECT user_id, username, password, status, blocked 
                 FROM users 
                 WHERE username = ?
                 ', array($name)
@@ -61,7 +104,9 @@ class UserManager {
     }
 
     public function logout() {
+        $controller = new UsersController();
         unset($_SESSION['user']);
+        $controller->addMessage('Byl jste úspěšně přihlášen.');
     }
 
     public function getUser() {
@@ -73,9 +118,17 @@ class UserManager {
 
     public function getAllUsers() {
         return DBWrapper::getAllRows('
-            SELECT `user_id`, `username`, `password`, `status`
+            SELECT `user_id`, `username`, `password`, `status`, `blocked` 
             FROM `users`
             ORDER BY `user_id` DESC
         ');
+    }
+
+    public function deleteUser($id) {
+        $controller = new UsersController();
+        DBWrapper::query('
+            DELETE FROM users WHERE user_id = ? 
+        ', array($id));
+        $controller->addMessage('Uživatel s id '. $params[1] . ' byl úspěšně odstraněn');
     }
 }

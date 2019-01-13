@@ -17,7 +17,6 @@ class LoginController extends Controller {
             try
             {
                 $userManager->login($_POST['username'], $_POST['password']);
-                $this->addMessage('Byl jste úspěšně přihlášen.');
                 $this->redirect('administration');
             }
             catch (UserError $error)
