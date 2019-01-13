@@ -1,0 +1,22 @@
+<h2>Seznam článků k recenzi</h2>
+<hr>
+<table>
+<?php foreach ($reviews as $review) : ?>
+        <tr>
+                <td>
+                        <h2><a href="review/<?= $review['url'] ?>"><?= $review['title'] ?></a></h2>
+                        <?= $review['description'] ?>
+                                <?php if ($admin) : ?>
+                                <br />
+                                <a href="review/<?= $review['url'] ?>/remove" class="btn btn-info" role="button">Odstranit</a>
+                                <?php endif ?>
+                </td>
+        </tr>
+<?php endforeach ?>
+
+<?php if(empty($reviews)) : ?>
+<p>
+        Seznam recenzí je bohužel prázdný.
+</p>
+<?php endif ?>
+</table>

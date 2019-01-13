@@ -43,24 +43,51 @@
                                 </h4>
                             </a>
                         </div>
-                        <div class="col-sm-3"><a href="article" class="btn btn-default 
-                                                btn-lg btn-block" role="button"><h4>Všechny články</h4></a>
+                        <div class="col-sm-3">
+                            <a href="article" class="btn btn-default btn-lg btn-block" role="button">
+                                <h4>
+                                    Všechny články
+                                </h4>
+                            </a>
                         </div>
                         <?php if (($userManager = new UserManager())->getUser()) : ?>
-                            <div class="col-sm-3"><a href="administration" class="btn btn-default 
-                                                    btn-lg btn-block" role="button"><h4>Administrace</h4></a>
+                            <div class="col-sm-3">
+                                <a href="administration" class="btn btn-default btn-lg btn-block" role="button">
+                                    <h4>
+                                        Administrace
+                                    </h4>
+                                </a>
                             </div>
-                            <div class="col-sm-3"><a href="administration/logout" class="btn btn-default 
-                                                    btn-lg btn-block" role="button"><h4>Logout</h4></a>
-                            <p class="text-center"><font size="+1">(přihlášený uživatel:
-                            <strong><?= $this->data['curUsername'] ?></strong> - <?= $this->data['curStatus'] ?>)</font></p>
+                            <div class="col-sm-3">
+                                <a href="administration/logout" class="btn btn-default btn-lg btn-block" role="button">
+                                    <h4>
+                                        Odhlásit
+                                    </h4>
+                                </a>
+                                <p class="text-center">
+                                    <font size="+1">
+                                        (přihlášený uživatel:
+                                        <strong>
+                                            <?= $this->data['curUsername'] ?>
+                                        </strong>
+                                        <br>- <?= $this->data['curStatus'] ?>)
+                                    </font>
+                                </p>
                             </div>
                         <?php else: ?>
-                        <div class="col-sm-3"><a href="login" class="btn btn-default 
-                                                 btn-lg btn-block" role="button"><h4>Login</h4></a>
+                        <div class="col-sm-3">
+                            <a href="login" class="btn btn-default btn-lg btn-block" role="button">
+                                <h4>
+                                    Přihlásit
+                                </h4>
+                            </a>
                         </div>
-                        <div class="col-sm-3"><a href="registration" class="btn btn-default 
-                                                btn-lg btn-block" role="button"><h4>Registrace</h4></a>
+                        <div class="col-sm-3">
+                            <a href="registration" class="btn btn-default btn-lg btn-block" role="button">
+                                <h4>
+                                    Registrace
+                                </h4>
+                            </a>
                         </div>
                         <?php endif; ?>
                     </div>
@@ -80,18 +107,18 @@
                 </p>
             </div>
         <footer>
-        <div class="container" class="row">
-            <p>
-                <div class="col-sm-8">
-                    Vytvořil &copy;Ondřej Havlíček 2019 pro předmět KIV/WEB
-                </div>
-                <div class="col-sm-4">
-                    <a href="contact">
-                        <img src="../img/mail.png" alt="Mail image" width="32" height="32"> Kontakt
-                    </a>
-                </div>
-            </p>
-        </div>
+            <div class="container" class="row">
+                <p>
+                    <div class="col-sm-8">
+                        Vytvořil &copy;Ondřej Havlíček 2019 pro předmět KIV/WEB
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="contact">
+                            <img src="../img/mail.png" alt="Mail image" width="32" height="32"> Kontakt
+                        </a>
+                    </div>
+                </p>
+            </div>
         </footer>
     </body>
 </html>

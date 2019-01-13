@@ -27,6 +27,7 @@ class UserManager {
             echo $error;
             throw new UserError('Uživatel s tímto jménem již v systému existuje.');
         }
+        DBWrapper::update('users');
     }
 
     public function raiseRank($id) {

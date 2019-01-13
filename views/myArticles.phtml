@@ -1,0 +1,23 @@
+<h2>Seznam mých článků</h2>
+<hr>
+<table>
+<?php foreach ($articles as $article) : ?>
+        <tr>
+                <td>
+                        <h2><a href="article/<?= $article['url'] ?>"><?= $article['title'] ?></a></h2>
+                        <?= $article['description'] ?>
+                                <?php if ($admin) : ?>
+                                <br />
+                                <a href="editor/<?= $article['url'] ?> class="btn btn-info" role="button">Editovat</a>
+                                <a href="article/<?= $article['url'] ?>/remove" class="btn btn-info" role="button">Odstranit</a>
+                                <?php endif ?>
+                </td>
+        </tr>
+<?php endforeach ?>
+
+<?php if(empty($articles)) : ?>
+<p>
+        Seznam článků je bohužel prázdný.
+</p>
+<?php endif ?>
+</table>

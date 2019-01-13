@@ -8,9 +8,11 @@ class MyReviewsController extends Controller {
             'description' => 'Tato stránka je určena k prohlédnutí příspěvků uživatele v roli autora.',
             'keywords' => 'prohlidnuti, autor, review, prispevek, prispevky');
 
-        $articleManager = new ArticleManager();
-        $articles = $articleManager->getMyArticles($this->data['user_id']);
-        $this->data['articles'] = $articles;
-        $this->view = 'articles';
+        $reviewManager = new ReviewManager();
+        $userManager = new UserManager();
+        $user = $userManager->getUser();
+        $reviews = $reviewManager->getMyReviews($user['user_id']);
+        $this->data['reviews'] = $reviews;
+        $this->view = 'myReviews';
     }
 }

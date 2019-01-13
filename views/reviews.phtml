@@ -5,16 +5,12 @@
     <tr>
       <th scope="col">ID v databázi</th>
       <th scope="col">Uživatelské jméno</th>
-      <th scope="col">Status</th>
-      <th scope="col">K povýšení</th>
     </tr>
   </thead>
   <tbody>
-    <?php foreach ($users as $user) : ?>
+    <?php foreach ($reviews as $review) : ?>
                 <tr>
-                    <td><?= $user['user_id'] ?></td>
-                    <td><?= $user['username'] ?></td>
-                    <td><?= $user['status'] ?></td>
+                    <td><?= $review['review_id'] ?></td>
                     <td><div class="form-check">
                         <input type="checkbox" class="form-check-input" id="materialUnchecked">
                         <label class="form-check-label" for="materialUnchecked"></label>

@@ -24,6 +24,16 @@ class ArticleManager {
         ');
     }
 
+    public function getMyArticles($id) {
+        return DBWrapper::getAllRows('
+            SELECT `article_id`, `title`, `url`, `description`
+            FROM `articles`
+            WHERE FK_user_id = ?
+            ORDER BY `article_id` DESC
+            ', array($id)
+        );
+    }
+
     public function saveArticle($id, $article) {
         if (!id) {
             DBWrapper::add('articles', $article);
@@ -31,6 +41,7 @@ class ArticleManager {
         else {
             DBWrapper::alter('articles', $article, 'WHERE article_id = ?', array($id));
         }
+        DBWrapper::update('articles');
     }
 
     public function removeArticle($url) {
@@ -39,5 +50,6 @@ class ArticleManager {
                     WHERE url = ?
                     ', array($url)
         );
+        DBWrapper::update('articles');
     }
 }

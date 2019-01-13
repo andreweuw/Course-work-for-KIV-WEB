@@ -4,10 +4,10 @@
         jste přihlášen jako <b><?= $status ?></b>
 </p>
 <?php if ($status == "autor") : ?>
-        <h2><a href="myRewievs" class="btn btn-default" role="button">Moje příspěvky</a></h2><br />
+        <h2><a href="myArticles" class="btn btn-default" role="button">Moje příspěvky</a></h2><br />
         <h2><a href="editor" class="btn btn-default" role="button">Přidat článek</a></h2><br />
 <?php elseif ($status == "recenzent") : ?>
-        <h2><a href="reviews" class="btn btn-default" role="button">Přejít k recenzím</a></h2><br />
+        <h2><a href="myReviews" class="btn btn-default" role="button">Přejít k recenzím</a></h2><br />
 <?php elseif ($status == "administrator") : ?>
         <h2><a href="users" class="btn btn-default" role="button">Seznam uživatelů</a></h2><br />
         <h2><a href="reviews" class="btn btn-default" role="button">Seznam recenzí</a></h2><br />
