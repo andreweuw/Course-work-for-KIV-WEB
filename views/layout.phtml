@@ -4,119 +4,89 @@
         <base href="/localhost" />
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title><?= $title ?></title>
         <meta name="description" content="<?= $description ?>" />
         <meta name="keywords" content="<?= $keywords ?>" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <!-- core bootstrap cdn -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-        <script src="https://www.google.com/reCAPTCHA/api.js" async defer></script>
         <link rel="stylesheet" href="style.css">
-
-
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css" rel="stylesheet"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-        <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
         </head>
 
         <body>
-            <header>
-                <div class="page-header">
-                    <h1 class="text-center"><img src="../img/chat.png" alt="Chat image" width="128" height="128">Etika eutanázie <small>konference</small></h1>
-                    <div class="container" class="text-center" class="menu" class="row">
-                        <div class="col-sm-3">
-                            <a href="home" class="btn btn-default btn-lg btn-block" role="button">
-                                <h4>
-                                    Úvod
-                                </h4>
-                            </a>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fill">
+                <a class="navbar-brand" href="home">
+                    <h2>
+                        <img src="../img/chat.png" alt="Chat image" width="64" height="64">Etika eutanázie
+                    </h2>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="container">
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-item nav-link" href="home">Úvod</a>
+                            <a class="nav-item nav-link" href="article">Seznam článků</a>
+                            <?php if (($userManager = new UserManager())->getUser()) : ?>
+                                <a class="nav-item nav-link" href="administration">Administrace</a>
+                                <a class="nav-item nav-link" href="administration/logout">Odhlásit</a>
+                            <?php else: ?>
+                                <a class="nav-item nav-link" href="login">Přihlásit</a>
+                                <a class="nav-item nav-link" href="registration">Registrovat</a>
+                            <?php endif; ?>
                         </div>
-                        <div class="col-sm-3">
-                            <a href="article" class="btn btn-default btn-lg btn-block" role="button">
-                                <h4>
-                                    Všechny články
-                                </h4>
-                            </a>
-                        </div>
-                        <?php if (($userManager = new UserManager())->getUser()) : ?>
-                            <div class="col-sm-3">
-                                <a href="administration" class="btn btn-default btn-lg btn-block" role="button">
-                                    <h4>
-                                        Administrace
-                                    </h4>
-                                </a>
-                            </div>
-                            <div class="col-sm-3">
-                                <a href="administration/logout" class="btn btn-default btn-lg btn-block" role="button">
-                                    <h4>
-                                        Odhlásit
-                                    </h4>
-                                </a>
-                                <p class="text-center">
-                                    <font size="+1">
-                                        (přihlášený uživatel:
-                                        <strong>
-                                            <?= $this->data['curUsername'] ?>
-                                        </strong>
-                                        <br>- <?= $this->data['curStatus'] ?>)
-                                    </font>
-                                </p>
-                            </div>
-                        <?php else: ?>
-                        <div class="col-sm-3">
-                            <a href="login" class="btn btn-default btn-lg btn-block" role="button">
-                                <h4>
-                                    Přihlásit
-                                </h4>
-                            </a>
-                        </div>
-                        <div class="col-sm-3">
-                            <a href="registration" class="btn btn-default btn-lg btn-block" role="button">
-                                <h4>
-                                    Registrace
-                                </h4>
-                            </a>
-                        </div>
-                        <?php endif; ?>
                     </div>
                 </div>
-            </header>
-            <div class="container">
+                <?php if (($userManager = new UserManager())->getUser()) : ?>
+                    <span class="navbar-text" align="center">
+                        přihlášený uživatel: 
+                        <strong>
+                            <?= $this->data['curUsername'] ?>
+                        </strong>
+                        (<?= $this->data['curStatus'] ?>)
+                    </span>
+                <?php endif; ?>
+                </div>
+            </nav>
+                <div class="container">
                 <?php foreach ($messages as $message) : ?>
                     <p class="message">
                         <?= $message ?>
                     </p>
                 <?php endforeach ?>
                 <br clear="both" />
-            </div>
-            <div class="container">
-                <p>
+                <article>
                     <?php $this->controller->printView(); ?>
+                </article>
+                </div>
+
+        <!-- jQuery library -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script> -->
+
+        <!-- <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> -->
+        
+        <footer class="footer" align="center">
+                <p class="text-muted">
+                    Vytvořil &copy;Ondřej Havlíček, 2019, pro předmět KIV/WEB
                 </p>
-            </div>
-        <footer>
-            <div class="container" class="row">
-                <p>
-                    <div class="col-sm-8">
-                        Vytvořil &copy;Ondřej Havlíček 2019 pro předmět KIV/WEB
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="contact">
-                            <img src="../img/mail.png" alt="Mail image" width="32" height="32"> Kontakt
-                        </a>
-                    </div>
+                <p class="text-muted">>
+                    <a href="contact">
+                        <img src="../img/mail.png" alt="Mail image" width="32" height="32"> Kontakt
+                    </a>
                 </p>
             </div>
         </footer>

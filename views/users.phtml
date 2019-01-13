@@ -1,8 +1,9 @@
 <h2>Seznam uživatelů</h2>
 <hr>
-<table class="table table-striped table-hover table-dark">
+<table class="table table-striped table-hover">
   <thead>
     <tr>
+      <th scope="col">#</th>
       <th scope="col">ID v databázi</th>
       <th scope="col">Uživatelské jméno</th>
       <th scope="col">Status</th>
@@ -12,18 +13,23 @@
   </thead>
   <tbody>
     <?php foreach ($users as $user) : ?>
-                <tr>
+      <? if (($user['blocked']) == true) : ?>
+        <tr class="table-danger">
+      <? else : ?>
+        <tr>
+      <? endif; ?>
+                    <th scope="row">i++;</th>
                     <td><?= $user['user_id'] ?></td>
                     <td><?= $user['username'] ?></td>
                     <td><?= $user['status'] ?></td>
                     <td><?= $user['blocked'] ?></td>
-                    <?php
-                      echo"<td><a href='administration/delete/".$user['user_id']."'>odstranit uživatele</a></td>";
-                      echo"<td><a href='administration/raiseRank/".$user['user_id']."'>povýšit uživatele</a></td>";
-                      echo"<td><a href='administration/lowerRank/".$user['user_id']."'>Snížit status uživatele</a></td>";
-                      echo"<td><a href='administration/block/".$user['user_id']."'>blokovat uživatele</a></td>";
-                      echo"<td><a href='administration/unblock/".$user['user_id']."'>odblokovat uživatele</a></td>";
-                    ?>
+                      <?php
+                        echo"<td><a href='administration/delete/".$user['user_id']."'>odstranit uživatele</a></td>";
+                        echo"<td><a href='administration/raiseRank/".$user['user_id']."'>povýšit uživatele</a></td>";
+                        echo"<td><a href='administration/lowerRank/".$user['user_id']."'>snížit status uživatele</a></td>";
+                        echo"<td><a href='administration/block/".$user['user_id']."'>blokovat uživatele</a></td>";
+                        echo"<td><a href='administration/unblock/".$user['user_id']."'>odblokovat uživatele</a></td>";
+                      ?>
                 </tr>
         <?php endforeach ?>
   </tbody>
