@@ -1,23 +1,31 @@
 <h1>Editor článků</h1>
-
-<form method="post">
-        <input type="hidden" name="article_id" value="<?= $article['article_id'] ?>" />
+<div class="form-group">
+<form method="post" encytype="multipart/form-data">
         Titulek<br />
         <input type="text" name="title" value="<?= $article['title'] ?>" /><br />
-        URL<br />
-        <input type="text" name="url" value="<?= $article['url'] ?>" /><br />
+        Pdf<br />
+        <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
+        <input name="pdf" value="<?= $article['pdf']?>" class="btn btn-default" role="button" type="file"><br />
+        Abstrakt<br />
+        <textarea name="abstract"><?= $article['abstract'] ?></textarea><br />
+                
         Popisek<br />
         <input type="text" name="description" value="<?= $article['description'] ?>" /><br />
+
+        URL<br />
+        <input type="text" name="url" value="<?= $article['url'] ?>" /><br />
+
         Klíčová slova<br />
         <input type="text" name="keywords" value="<?= $article['keywords'] ?>" /><br />
-        <textarea name="content"><?= $article['content'] ?></textarea>
+
         <input type="submit" class="btn btn-default" role="button" value="Uložit článek" />
 </form>
+</div>
 
 <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 <script type="text/javascript">
         tinymce.init({
-                        selector: "textarea[name=content]",
+                        selector: "textarea[name=abstract]",
                         plugins: [
                                         "advlist autolink lists link image charmap print preview anchor",
                                         "searchreplace visualblocks code fullscreen",

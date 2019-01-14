@@ -22,7 +22,6 @@ class UserManager {
             DBWrapper::add('users', $user);
         }
         catch (PDOException $error) {
-            echo $error;
             throw new UserError('Uživatel s tímto jménem již v systému existuje.');
         }
     }
@@ -30,7 +29,7 @@ class UserManager {
     public function block($id, $val) {
         $controller = new UsersController();
         if (DBWrapper::query("UPDATE users SET `blocked` = ? WHERE user_id = ?", array($val, $id)) > 0) {
-            $controller->addMessage('Uživatel s id '. $params[1] . ' byl úspěšně blokován');
+            $controller->addMessage('Uživatel s id '. $id . ' byl úspěšně blokován');
         }
         else {
             $controller->addMessage('Provádíte zbytečnou operaci, blokování / odblokování nebylo provedeno.');
@@ -129,6 +128,6 @@ class UserManager {
         DBWrapper::query('
             DELETE FROM users WHERE user_id = ? 
         ', array($id));
-        $controller->addMessage('Uživatel s id '. $params[1] . ' byl úspěšně odstraněn');
+        $controller->addMessage('Uživatel s id '. $id . ' byl úspěšně odstraněn');
     }
 }

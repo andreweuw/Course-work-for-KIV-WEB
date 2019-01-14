@@ -8,7 +8,7 @@ class RouterController extends Controller {
         $parsedURL = $this->parseURL($params[0]);
 
         if (empty($parsedURL[0])) {
-            $this->redirect('article/uvod');
+            $this->redirect('home');
         }
         
         $controllerClass = $this->dashToCamel(array_shift($parsedURL)) . 'Controller';

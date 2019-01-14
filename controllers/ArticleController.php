@@ -9,27 +9,25 @@ class ArticleController extends Controller {
         $this->data['status'] = $user && $user['status'];
 
         if (!empty($params[1]) && $params[1] == 'remove') {
-            $this->verifyUser(true);
-            $articleManager->removeArticle($params[0]);
-            $this->addMessage('Článek byl úspěšně odstraněn');
+            $article = $articleManager->getArticle($params[0]);
+            $articleManager->deleteArticle($article['article_id']);
             $this->redirect('article');
         }
         elseif (!empty($params[0])) {
             $article = $articleManager->getArticle($params[0]);
-
             if (!$article) {
-                $this->redirect('error');
+                $this->addMessage('params[0]: ' . $params[0]);
             }
 
             $this->header = array(
                 'title' => $article['title'],
                 'description' => $article['description'],
-                'keywords' => $article['keywords']
+                'keywords' => $article['keywords'],
             );
 
             $this->data['title'] = $article['title'];
-            $this->data['content'] = $article['content'];
-
+            $this->data['abstract'] = $article['abstract'];
+            $this->data['pdf'] = $article['pdf'];
             $this->view = 'article';
         }
         else {

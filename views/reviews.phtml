@@ -1,24 +1,28 @@
 <h2>Seznam recenzí</h2>
-<hr>
-<table class="table table-striped table-hover table-dark">
-  <thead>
-    <tr>
-      <th scope="col">ID v databázi</th>
+<?php $i = 1; ?>
+<div class="table-responsive">
+  <table id="reviewTable" class="table table-striped table-hover">
+    <thead>
+      <tr align="center">
+      <th scope="col">ID uživatele</th>
       <th scope="col">Uživatelské jméno</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php foreach ($reviews as $review) : ?>
-                <tr>
-                    <td><?= $review['review_id'] ?></td>
-                    <td><div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="materialUnchecked">
-                        <label class="form-check-label" for="materialUnchecked"></label>
-                    </div></td>
-                </tr>
-        <?php endforeach ?>
-  </tbody>
-</table>
-<div class="text-center">
-<input type="submit" class="btn btn-success" role="button" value="Povýšit označené" /></div>
-
+        <!-- <th scope="col">Smazat</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($reviews as $review) : ?>
+          <tr align="center">
+                      <th scope="row"><?php echo $i++;?> </th>
+                      <td><?= $review['review_id'] ?></td>
+                        <?php
+                          echo"<td><a href='administration/delete/".$user['user_id']."'>odstranit uživatele</a></td>";
+                          echo"<td><a href='administration/raiseRank/".$user['user_id']."'>povýšit uživatele</a></td>";
+                          echo"<td><a href='administration/lowerRank/".$user['user_id']."'>snížit status uživatele</a></td>";
+                          echo"<td><a href='administration/block/".$user['user_id']."'>blokovat uživatele</a></td>";
+                          echo"<td><a href='administration/unblock/".$user['user_id']."'>odblokovat uživatele</a></td>";
+                        ?>
+                  </tr>
+          <?php endforeach ?>
+    </tbody>
+  </table>
+</div>

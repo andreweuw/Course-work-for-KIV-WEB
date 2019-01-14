@@ -1,6 +1,5 @@
 <?php
 
-
 class ArticleManager {
     
     public function addArticle($params = array()) {
@@ -9,8 +8,8 @@ class ArticleManager {
 
     public function getArticle($url) {
         return DBWrapper::getRow('
-            SELECT `article_id`, `title`, `content`, `url`, `description`, `keywords`
-            FROM `articles`
+            SELECT * 
+            FROM `articles` 
             WHERE `url` = ?
             ', array($url)
         );
@@ -18,38 +17,51 @@ class ArticleManager {
 
     public function getArticles() {
         return DBWrapper::getAllRows('
-            SELECT `article_id`, `title`, `url`, `description`
-            FROM `articles`
+            SELECT * 
+            FROM `articles` 
             ORDER BY `article_id` DESC
         ');
     }
 
     public function getMyArticles($id) {
         return DBWrapper::getAllRows('
-            SELECT `article_id`, `title`, `url`, `description`
-            FROM `articles`
-            WHERE FK_user_id = ?
+            SELECT * FROM `articles` 
+            WHERE FK_user_id = ? 
             ORDER BY `article_id` DESC
             ', array($id)
         );
     }
 
-    public function saveArticle($id, $article) {
-        if (!id) {
+    public function saveArticle($title, $pdf, $url, $abstract, $description, $keywords) {
+        $articleController = new ArticleController();
+        $userManager = new UserManager();
+        $user = $userManager->getUser();
+        $article = array(
+            'title' => $title,
+            'pdf' => $pdf,
+            'abstract' => $abstract,
+            'url' => $url,
+            'description' => $description,
+            'keywords' => $keywords,
+            'status' => 'k recenzi',
+            'FK_user_id' =>  $user['user_id']
+        );
+
+        try {
             DBWrapper::add('articles', $article);
+            $articleController->addMessage('Článek byl úspěšně uložen.');
         }
-        else {
-            DBWrapper::alter('articles', $article, 'WHERE article_id = ?', array($id));
+        catch (PDOException $error) {
+            $articleController->addMessage($error);
+            $articleController->addMessage('Článek s tímto názvem již existuje.');
         }
-        DBWrapper::update('articles');
     }
 
-    public function removeArticle($url) {
+    public function deleteArticle($id) {
+        $controller = new UsersController();
         DBWrapper::query('
-                    DELETE FROM articles
-                    WHERE url = ?
-                    ', array($url)
-        );
-        DBWrapper::update('articles');
+            DELETE FROM articles WHERE article_id = ? 
+        ', array($id));
+        $controller->addMessage('Článek s id '. $id . ' byl úspěšně odstraněn');
     }
 }
