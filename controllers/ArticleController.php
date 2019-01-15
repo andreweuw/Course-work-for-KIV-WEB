@@ -11,6 +11,7 @@ class ArticleController extends Controller {
         if (!empty($params[1]) && $params[1] == 'remove') {
             $article = $articleManager->getArticle($params[0]);
             $articleManager->deleteArticle($article['article_id']);
+            $articleManager->deletePdf($article['file_name']);
             $this->redirect('article');
         }
         elseif (!empty($params[0])) {
@@ -25,9 +26,17 @@ class ArticleController extends Controller {
                 'keywords' => $article['keywords'],
             );
 
-            $this->data['title'] = $article['title'];
-            $this->data['abstract'] = $article['abstract'];
-            $this->data['pdf'] = $article['pdf'];
+            $this->data = array(
+                'article_id' => $article['article_id'],
+                'title' => $article['title'],
+                'abstract' => $article['abstract'],
+                'description' => $article['description'],
+                'url' => $article['url'],
+                'author' => $article['FK_user_id'],
+                'keywords' => $article['keywords'],
+                'score' => $article['score'],
+                'file_name' => $article['file_name']
+            );
             $this->view = 'article';
         }
         else {

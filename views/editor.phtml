@@ -1,26 +1,27 @@
 <h1>Editor článků</h1>
-<div class="form-group">
-<form method="post" encytype="multipart/form-data">
-        Titulek<br />
-        <input type="text" name="title" value="<?= $article['title'] ?>" /><br />
-        Pdf<br />
+<form enctype="multipart/form-data" method="POST">
+        <label for="titleB">Titulek článku</label>
+        <input id="titleB" class="form-text" name="title" value="<?= $article['title'] ?>" /><br />
+
         <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
-        <input name="pdf" value="<?= $article['pdf']?>" class="btn btn-default" role="button" type="file"><br />
-        Abstrakt<br />
-        <textarea name="abstract"><?= $article['abstract'] ?></textarea><br />
+        <label for="file">PDF článku</label><br />
+        <input type="file" name="file" class="form-control-file" id="file" accept="application/pdf"><br /><br />
+
+        <label for="abs">Abstrakt článku</label>
+        <textarea id="abs" class="form-control" rows="5" name="abstract"><?= $article['abstract'] ?></textarea><br />
                 
-        Popisek<br />
-        <input type="text" name="description" value="<?= $article['description'] ?>" /><br />
+        <label for="descr">Stručný popis článku</label>
+        <input id="descr" class="form-text" name="description" value="<?= $article['description'] ?>" /><br />
 
-        URL<br />
-        <input type="text" name="url" value="<?= $article['url'] ?>" /><br />
+        <label for="url">Konec URL (malá písmena bez diakritiky)</label>
+        <input id="url" class="form-text" name="url" value="<?= $article['url'] ?>" /><br />
 
-        Klíčová slova<br />
-        <input type="text" name="keywords" value="<?= $article['keywords'] ?>" /><br />
-
-        <input type="submit" class="btn btn-default" role="button" value="Uložit článek" />
+        <label for="keywords">Klíčová slova</label>
+        <input id="keywords" class="form-text" name="keywords" value="<?= $article['keywords'] ?>" /><br />
+        <br />
+        <input type="submit" value="Uložit článek" class="btn btn-default" role="button"/><br /><br />
+        <!-- <input type="submit" class="btn btn-default" role="button" value="Uložit článek" /> -->
 </form>
-</div>
 
 <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 <script type="text/javascript">
@@ -37,3 +38,6 @@
                         entity_encoding: "raw"
         });
 </script>
+
+
+

@@ -16,7 +16,11 @@ class RouterController extends Controller {
         if (file_exists('controllers/' . $controllerClass . '.php')) {
             $this->controller = new $controllerClass;
         }
+        else if (file_exists('articles/' . $params[2])) {
+            $this->redirect('home');
+        }
         else {
+            $this->addMessage($params[0] . ', ' . $params[1] . ', ' . $params[2]);
             $this->redirect('error');
         }
 

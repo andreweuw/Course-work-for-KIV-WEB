@@ -1,10 +1,20 @@
 <header>
-    <h2><?= $title ?></h2>
+
+    <h3><?= $title ?></h3>
 </header>
 <hr>
 <section>
-    <?= $_abstract ?>
-
-    <embed src="../articles/cechy.pdf" width="800px" height="2100px" />
-
+    ABSTRAKT: <?= $_abstract ?>
+    <?php
+        $dir = new DirectoryIterator('articles');
+        $finalName;
+        foreach ($dir as $fileName) {
+            if (!$fileName->isDot()) {
+                if (substr($fileName, 0, strlen($url)) == $url) {
+                    echo"<a href='editor/display/$fileName.add' class='btn btn-default' role='button'>Stáhnout celý článek</a>";
+                }
+            }
+        }
+    ?>
+    <br/><br/>
 </section>

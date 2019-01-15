@@ -48,7 +48,7 @@ class AdministrationController extends Controller
         $this->data['username'] = $user['username'];
         $this->data['status'] = $user['status'];
         $this->data['blocked'] = $user['blocked'];
-        // Nastavení šablony
+        
         $this->view = 'administration';
     }
 }
