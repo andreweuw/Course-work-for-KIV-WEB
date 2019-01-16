@@ -87,27 +87,9 @@ hr{
     background: white !important;
 }
 
-table
-{
-    counter-reset: rowNumber !important;
-}
-
-table tr > td:first-child
-{
-    counter-increment: rowNumber !important;
-}
-
-table tr td:first-child::before
-{
-    content: counter(rowNumber) !important;
-    min-width: 1em !important;
-    margin-right: 0.5em !important;
-}
-
 html {
     overflow-y: scroll !important;
 }
-
 /* .custom-file-upload {
     border: 1px solid #ccc;
     display: inline-block;

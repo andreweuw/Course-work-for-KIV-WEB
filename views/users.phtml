@@ -27,10 +27,10 @@
                       <td><?= $user['blocked'] ?></td>
                         <?php echo"<td><a href='administration/delete/".$user['user_id']."'>odstranit uživatele</a></td>";
                          
-                          echo"<td><a href='administration/raiseRank/".$user['user_id']."'>povýšit uživatele</a></td>";
-                          echo"<td><a href='administration/lowerRank/".$user['user_id']."'>snížit status uživatele</a></td>";
-                          echo"<td><a href='administration/block/".$user['user_id']."'>blokovat uživatele</a></td>";
-                          echo"<td><a href='administration/unblock/".$user['user_id']."'>odblokovat uživatele</a></td>";
+                          echo"<td><a href='administration/raiseRank/".$user['user_id']."' class='btn btn-default' role='button'>povýšit uživatele</a></td>";
+                          echo"<td><a href='administration/lowerRank/".$user['user_id']."' class='btn btn-default' role='button'>snížit status uživatele</a></td>";
+                          echo"<td><a href='administration/block/".$user['user_id']."' class='btn btn-default' role='button'>blokovat uživatele</a></td>";
+                          echo"<td><a href='administration/unblock/".$user['user_id']."' class='btn btn-default' role='button'>odblokovat uživatele</a></td>";
                         ?>
                   </tr>
           <?php endforeach ?>

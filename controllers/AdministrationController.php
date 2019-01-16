@@ -5,14 +5,18 @@ class AdministrationController extends Controller
     public function process($params)
     {
         // Do administrace mají přístup jen přihlášení uživatelé
-        $this->verifyUser();
-        // Hlavička stránky
+        $userManager = new UserManager();
+        $user = $userManager->getUser();
+        if ($user['blocked']) {
+            $this->addMessage('Tento účet je zablokovaný administrátorem. Pokuď si myslíte, že jde o omyl, obraťte se na kontakt v patičce stránky.');
+            $userManager->logout();
+            $this->redirect('home');
+        }
+
         $this->header = array(
             'title' => 'Administrace',
             'description' => 'Na této stránce může uživatel využívat pravomoce.',
             'keywords' => 'uzivatel, user, admin, editation');
-        // Získání dat o přihlášeném uživateli
-        $userManager = new UserManager();
         if (!empty($params[0])) {
             switch ($params[0]) {
                 case 'logout':

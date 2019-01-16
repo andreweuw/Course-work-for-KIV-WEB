@@ -1,28 +1,93 @@
-<h2>Seznam recenzí</h2>
+<h2>Seznam článků k recenzi</h2>
+<hr>
+<p align="center">
+Pro vykonání změny daného článku (přidání recenzentů, odebírání recenzentů) je zapotřebí akci ukončit tlačítkem "Uložit článek" daného článku.
+</p>
 <?php $i = 1; ?>
 <div class="table-responsive">
   <table id="reviewTable" class="table table-striped table-hover">
     <thead>
       <tr align="center">
-      <th scope="col">ID uživatele</th>
-      <th scope="col">Uživatelské jméno</th>
+      <th scope="col">Řádek</th>
+      <th scope="col">Jméno autora</th>
+      <th scope="col">Článek</th>
+      <th scope="col">Stav</th>
+      <?php for($j = 1; $j < $max_count + 1; $j++) : ?>
+        <th scope="col">Recenzent <?=$j?></th>
+      <?php endfor; ?>
+      <th scope="col"></th>
         <!-- <th scope="col">Smazat</th> -->
       </tr>
     </thead>
     <tbody>
-      <?php foreach ($reviews as $review) : ?>
+      <?php foreach ($articles as $article) : ?>
+      <?php if ($article['status'] != 'schvaleno') : ?>
           <tr align="center">
                       <th scope="row"><?php echo $i++;?> </th>
-                      <td><?= $review['review_id'] ?></td>
-                        <?php
-                          echo"<td><a href='administration/delete/".$user['user_id']."'>odstranit uživatele</a></td>";
-                          echo"<td><a href='administration/raiseRank/".$user['user_id']."'>povýšit uživatele</a></td>";
-                          echo"<td><a href='administration/lowerRank/".$user['user_id']."'>snížit status uživatele</a></td>";
-                          echo"<td><a href='administration/block/".$user['user_id']."'>blokovat uživatele</a></td>";
-                          echo"<td><a href='administration/unblock/".$user['user_id']."'>odblokovat uživatele</a></td>";
+
+                      <td>
+                        <?php 
+                          $user = ( $userManager = new UserManager())->getUserById($article['FK_user_id']);
+                          echo $user['username'];
                         ?>
+                      </td>
+                      
+                      <td><a href="article/<?= $article['url'] ?>"><?= $article['title'] ?></a></td>
+
+                      <td>
+                        <?php if ($article['status'] == 'schvaleno') : ?>
+                          Schváleno
+                        <?php else: ?>
+                          Neschváleno
+                        <?php endif; ?>
+                      </td>
+
+                      <form method="post">
+                      <?php for($j = 1; $j < $article['reviewer_count'] + 1; $j++) : ?>
+                        <td>
+                        <input type="hidden" name="count" value="<?= $article['reviewer_count'] ?>">
+                        <input type="hidden" name="article_id" value="<?= $article['article_id'] ?>">
+                            <select class="form-control" name="reviewers[]" id="reviewer_id">
+                                  <?php
+                                    $ids = explode("_", $article['reviewers_ids']);
+                                    $cur = (new UserManager())->getUserById($ids[$j - 1]);
+                                  ?>
+
+                                <?php if ($cur['status'] == 'recenzent') :?>
+                                <option value="<?= $cur['user_id']?>">
+                                    <?=$cur['username']?>
+                                </option>
+                                <?php endif; ?>
+                              <?php foreach ($reviewers as $reviewer) : ?>
+                              
+                              <?php
+                                    if ($reviewer['user_id'] != $cur['user_id']) : ?>
+                                <option value="<?= $reviewer['user_id']?>">
+                                     <?=$reviewer['username']?>
+                                </option>
+                              <?php endif; ?>
+                              <?php endforeach; ?>
+                            </select>
+                        </td>
+                      <?php endfor; ?>
+                      
+                      <?php
+                          echo"<td><a href='reviews/add/" . $article['reviewer_count'] . "/". $article['article_id'] . "' class='btn btn-default' role='button'>Přidat recenzenta</a></td>";
+
+                          if ($article['reviewer_count'] > 3)
+                          echo"<td><a href='reviews/remove/" . $article['reviewer_count'] . "/" . $article['article_id'] . "' class='btn btn-default' role='button'>Odebrat recenzenta</a></td>";
+                        ?>
+                      <?php if ($article['reviewer_count'] > 2) : ?>
+                        <td>
+                          <input class="btn btn-default" role="button" type="submit" value="Uložit článek" />
+                        </td>
+                        <?php endif; ?>
+                        </form>
                   </tr>
+          <?php endif;?>
           <?php endforeach ?>
     </tbody>
   </table>
 </div>
+
+

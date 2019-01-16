@@ -34,11 +34,19 @@ class ArticleManager {
 
     public function getMyArticles($id) {
         return DBWrapper::getAllRows('
-            SELECT * FROM `articles` 
+            SELECT * 
+            FROM `articles` 
             WHERE FK_user_id = ? 
             ORDER BY `article_id` DESC
             ', array($id)
         );
+    }
+
+    public function getMaxRev() {
+        return DBWrapper::getRow('
+            SELECT MAX(reviewer_count) 
+            as max 
+            FROM articles;');
     }
 
     public function uploadPdf($fileName, $fileTmpName) {
@@ -66,6 +74,36 @@ class ArticleManager {
             readfile($file);
             exit;
         }
+    }
+
+    
+    public function updateReviewers($reviewers = array(), $count, $id) {
+        $reviewers_ids = $reviewers[0];
+        $articleController = new ArticleController();
+        foreach(array_slice($reviewers, 1) as $reviewer) {
+            $reviewers_ids .= ("_" . $reviewer);
+        }
+
+        if (substr($reviewers_ids, -1) === "_") {
+            $articleController->addMessage("Musíte nejdříve vybrat nového nebo odebrat prázdnou kolonku pro recenzenta.");
+        }
+        else {
+            DBWrapper::query("UPDATE articles SET `reviewers_ids` = ? WHERE article_id = ?", array($reviewers_ids, $id));
+            DBWrapper::query("UPDATE articles SET `reviewer_count` = ? WHERE article_id = ?", array($count, $id));
+            $articleController->addMessage("Recenzenti byli úspěšně přiřazeni ke článku.");
+        }
+    }
+
+    public function updateRevCount($id, $plus) {
+        $article = $this->getArticleById($id);
+        $new = $article['reviewer_count'];
+        if ($plus == true) {
+            $new++;
+        }
+        else {
+            $new--;
+        }
+        DBWrapper::query("UPDATE articles SET `reviewer_count` = ? WHERE article_id = ?", array($new, $id));
     }
 
     public function saveArticle($title, $url, $abstract, $description, $keywords, $file_name) {

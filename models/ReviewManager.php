@@ -9,20 +9,16 @@ class ReviewManager {
 
     public function getReview($url) {
         return DBWrapper::getRow('
-            SELECT `review_id`, `title`, `content`, `url`, `description`, `keywords`
+            SELECT * 
             FROM `reviews`
             WHERE `url` = ?
             ', array($url)
         );
     }
 
-    public function assertReview() {
-        return;
-    }
-
     public function getReviews() {
         return DBWrapper::getAllRows('
-            SELECT `review_id`, `score`, `lingvistic`
+            SELECT * 
             FROM `reviews`
             ORDER BY `review_id` DESC
         ');
@@ -30,7 +26,7 @@ class ReviewManager {
 
     public function getMyReviews($id) {
         return DBWrapper::getAllRows('
-            SELECT `review_id`, `score`, `lingvistic`
+            SELECT * 
             FROM `reviews`
             WHERE reviewer_id = ?
             ORDER BY `review_id` DESC

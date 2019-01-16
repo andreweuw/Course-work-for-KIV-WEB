@@ -64,14 +64,4 @@ abstract class Controller {
             return array();
         }
     }
-
-    public function verifyUser($admin = false) {
-        $userManager = new UserManager();
-        $user = $userManager->getUser();
-        if (!$user || ($admin && ($user['status'] != 'administrator'))) {
-            $this->addMessage('Je nám líto, ale k této akci nemáte dostatečná oprávnění.');
-            $this->redirect('login');
-        }
-    }
-
 }

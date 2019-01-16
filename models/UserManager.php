@@ -103,9 +103,7 @@ class UserManager {
     }
 
     public function logout() {
-        $controller = new UsersController();
         unset($_SESSION['user']);
-        $controller->addMessage('Byl jste úspěšně přihlášen.');
     }
 
     public function getUser() {
@@ -115,12 +113,30 @@ class UserManager {
         return null;
     }
 
+    public function getUserById($id) {
+        return DBWrapper::getRow('
+            SELECT * 
+            FROM `users` 
+            WHERE `user_id` = ?
+            ', array($id)
+        );
+    }
+
     public function getAllUsers() {
         return DBWrapper::getAllRows('
-            SELECT `user_id`, `username`, `password`, `status`, `blocked` 
+            SELECT * 
             FROM `users`
             ORDER BY `user_id` DESC
         ');
+    }
+
+    public function getAllReviewers() {
+        return DBWrapper::getAllRows('
+            SELECT * 
+            FROM `users` 
+            WHERE `status` = ? 
+            ORDER BY `user_id` DESC
+        ', array('recenzent'));
     }
 
     public function deleteUser($id) {
