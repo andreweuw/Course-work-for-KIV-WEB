@@ -148,4 +148,12 @@ class ArticleManager {
         $directory = $_SERVER['DOCUMENT_ROOT']."/articles/";
         unlink($directory . $fileName);
     }
+
+    public function getArticlesForReview($id) {
+        return DBWrapper::getAllRows("
+            SELECT * 
+            FROM `articles` 
+            WHERE reviewers_ids REGEXP ?", array($id)
+        );
+    }
 }

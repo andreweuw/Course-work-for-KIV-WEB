@@ -1,0 +1,74 @@
+<h1>Editor recenzí</h1>
+<p>
+Toto je recenze ke článku 
+<strong>
+<?php 
+    $article = (new ArticleManager())->getArticleById($FK_article_id);
+?>
+<a href="article/<?= $article['url'] ?>"><?= $article['title'] ?></a>
+</strong>
+</p>
+
+(1 = velmi dobré, 2 = dobré, 3 = normální, 4 = špatné, 5 = velmi špatné)
+
+
+<form enctype="multipart/form-data" method="POST">
+                
+        <div class="form-group">
+        <label for="tech">Techicky zpracované</label>
+        <select id="tech" class="form-control" name="technical">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        </div>
+
+        <div class="form-group">
+        <label for="lan">Jazykově zpracované</label>
+        <select id="lan" class="form-control" name="lingvistic">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        </div>
+
+        <div class="form-group">
+        <label for="fin">Celkové skóre</label>
+        <select id="fin" class="form-control" name="score">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        </div>
+
+        <label for="abs">Poznámky</label>
+        <textarea id="abs" class="form-control" rows="5" name="notes"><?= $review['notes']?></textarea><br />
+    
+        <input type="submit" value="Uložit recenzi" class="btn btn-default" role="button"/><br /><br />
+        
+</form>
+
+<script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+<script type="text/javascript">
+        tinymce.init({
+                        selector: "textarea[name=notes]",
+                        plugins: [
+                                        "advlist autolink lists link image charmap print preview anchor",
+                                        "searchreplace visualblocks code fullscreen",
+                                        "insertdatetime media table contextmenu paste"
+                        ],
+                        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+                        entities: "160,nbsp",
+                        entity_encoding: "named",
+                        entity_encoding: "raw"
+        });
+</script>
+
+
+
