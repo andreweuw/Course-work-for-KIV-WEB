@@ -9,6 +9,8 @@ class HomeController extends Controller {
             'description' => 'Domovská stránka webu.'
         );
 
+        $articleManager = new ArticleManager();
+        $this->data['articles'] = $articleManager->getAllPublished();
         $this->view = 'home';
     }
 }

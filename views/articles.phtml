@@ -1,14 +1,24 @@
 <h2>Seznam článků</h2>
 (klikněte na název pro detail)
 <?php $i = 1; ?>
-
 <div class="table-responsive">
-<table id="userTable" class="table table-striped table-hover">
+<table class="table table-striped table-hover">
 <?php foreach ($articles as $article) : ?>
         <tr align="center">
         <th scope="row"><?php echo $i++;?> </th>
-                
-        <td><h3><a href="article/<?= $article['url'] ?>"><?= $article['title'] ?></a></h3></td>
+
+        <td>
+                <h3>
+                        <?php if($article['published']) : ?>
+                        <a href="article/<?= $article['url'] ?>">
+                        
+                        <?php endif; ?>
+                        <?= $article['title'] ?>
+                        </a>
+                </h3>
+        </td>
+
+
         <td>  <?= $article['description'] ?></td>
         <td>     <?php 
                         $user = (new UserManager())->getUser();

@@ -16,11 +16,38 @@ class ReviewManager {
         );
     }
 
+    public function getScoreForArticle($article_id) {
+        return DBWrapper::getRow('
+            SELECT score 
+            FROM `reviews` 
+            WHERE `FK_article_id` = ?
+            ', array($article_id)
+        );
+    }
+
+    public function getReviewByArticle($article_id) {
+        return DBWrapper::getRow('
+            SELECT * 
+            FROM `reviews` 
+            WHERE `FK_article_id` = ?
+            ', array($article_id)
+        );
+    }
+
     public function getReviewById($id) {
         return DBWrapper::getRow('
             SELECT * 
             FROM `reviews` 
             WHERE `review_id` = ?
+            ', array($id)
+        );
+    }
+
+    public function getReviewByReviewer($id) {
+        return DBWrapper::getRow('
+            SELECT * 
+            FROM `reviews` 
+            WHERE `reviewer_id` = ?
             ', array($id)
         );
     }
@@ -43,22 +70,21 @@ class ReviewManager {
         );
     }
 
-    public function saveReview($id, $FK_review_id, $lingvistic, $notes, $score, $technical) {
+    public function isFirstReview($article_id) {
+        $old = $this->getReviewByArticle($article_id);
+        if ($old) {
+            return $old['review_id'];
+        }
+        return null;
+    }
+
+    public function saveReview($review = array()) {
         $reviewController = new ReviewsController();
         $user = (new UserManager())->getUser();
-        $review = $this->getReviewById($id);
-        if ($review) {
-            $this->deletereview($review['review_id']);
-        }
 
-        $review = array(
-            'FK_article_id' => $FK_review_id,
-            'lingvistic' => $lingvistic,
-            'notes' => $notes,
-            'reviewer_id' => $user['user_id'],
-            'score' => $score,
-            'technical' => $technical
-        );
+        if ($old = ($this->isFirstReview($review['FK_article_id']))) {
+            $this->deleteReview($old);
+        }
 
         try {
             DBWrapper::add('reviews', $review);
@@ -78,5 +104,13 @@ class ReviewManager {
                     ', array($url)
         );
         DBWrapper::update('reviews');
+    }
+
+    public function deleteReview($id) {
+        DBWrapper::query('
+            DELETE FROM reviews
+            WHERE review_id = ?
+                ', array($id)
+        );
     }
 }

@@ -1,4 +1,4 @@
-<h2>Seznam článků k recenzi</h2>
+<h2>Seznam mých článků k recenzi</h2>
 <?php $i = 1; ?>
 <?php if(empty($myArticles)) : ?>
 <p>
@@ -12,10 +12,9 @@
       <tr align="center">
       <th scope="col">Řádek</th>
       <th scope="col">ID článku</th>
-      <th scope="col">Titulek</th>
+      <th scope="col">Článek</th>
       <th scope="col">Popis</th>
       <th scope="col">Stav</th>
-      <th scope="col">Skóre</th>
       </tr>
     </thead>
     <tbody>
@@ -23,13 +22,17 @@
           <tr align="center">
                       <th scope="row"><?php echo $i++;?> </th>
                       <td><?= $article['article_id'] ?></td>
-                      <td><?= $article['title'] ?></td>
+                      <td> <a href="article/<?= $article['url'] ?>"><?= $article['title'] ?></a></td>
                       <td><?= $article['description'] ?></td>
                       <td><?= $article['status'] ?></td>
-                      <td><?= $article['score'] ?></td>
                         <?php
-                          echo"<td><a href='myReviews/prepare/". $article['article_id'] ."' class='btn btn-default' role='button'>Připravit recenzi</a></td>";
-                          echo"<td><a href='myReviews/edit/" . $article['url'] . "' class='btn btn-default' role='button'>Editovat recenzi</a></td>";
+                          if ($article['status'] == 'k recenzi') {
+                            echo"<td><a href='myReviews/prepare/". $article['article_id'] ."' class='btn btn-default' role='button'>Připravit recenzi</a></td>";
+                          }
+                          else {
+                            echo"<td><a href='myReviews/edit/" . $article['article_id'] . "' class='btn btn-default' role='button'>Editovat recenzi</a></td>";
+                            echo"<td><a href='myReviews/remove/" . $article['article_id'] . "' class='btn btn-default' role='button'>Smazat recenzi</a></td>";
+                          }
                         ?>
                   </tr>
           <?php endforeach ?>

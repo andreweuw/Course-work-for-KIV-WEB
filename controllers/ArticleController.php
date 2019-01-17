@@ -5,6 +5,7 @@ class ArticleController extends Controller {
     public function process($params) {
         $articleManager = new ArticleManager();
         $userManager = new UserManager();
+        $reviewManager = new ReviewManager();
         $user = $userManager->getUser();
         $this->data['status'] = $user && $user['status'];
 
@@ -34,7 +35,7 @@ class ArticleController extends Controller {
                 'url' => $article['url'],
                 'author' => $article['FK_user_id'],
                 'keywords' => $article['keywords'],
-                'score' => $article['score'],
+                'score' => $reviewManager->getScoreForArticle($article['article_id']),
                 'file_name' => $article['file_name']
             );
             $this->view = 'article';

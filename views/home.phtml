@@ -13,3 +13,33 @@
 </blockquote>
 </p>
 <p>Pojďme se o této problematice pobavit v otevřeném online fóru.</p>
+<hr>
+<div class="container text-center">  
+<h3 align="center">Čerstvé publikace</h3> <br>
+<?php foreach($articles as $article) : ?>
+<?php $counter = 0; ?>
+
+<div class="row" align="justify">
+    <?php if ($counter % 2 == 0) : ?>
+    <div class="col-sm-12">
+<?php else: ?>
+    <div class="col-sm-4">
+<?php endif; ?>
+
+    <a href="article/<?= $article['url'] ?>">
+      <h3><p><?=$article['title']?></p></h3>
+        </a>
+      <p>
+           <?php 
+            $articleManager = new ArticleManager();
+            $abstract = $articleManager->getAbstract($article['article_id']);
+            $text = $abstract[0];
+            echo $text[0];
+           ?>
+        </p>
+    </div>
+</div><br>
+
+<?php endforeach; ?>
+
+</div>

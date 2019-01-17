@@ -4,10 +4,9 @@
 </header>
 <hr>
 <section>
-    ABSTRAKT: <?= $_abstract ?>
+    <strong>Abstract:</strong> <?= $_abstract ?>
     <?php
         $dir = new DirectoryIterator('articles');
-        $finalName;
         foreach ($dir as $fileName) {
             if (!$fileName->isDot()) {
                 if (substr($fileName, 0, strlen($url)) == $url) {

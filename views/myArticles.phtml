@@ -14,7 +14,6 @@
       <th scope="col">Titulek</th>
       <th scope="col">Popis</th>
       <th scope="col">Stav</th>
-      <th scope="col">Skóre</th>
       </tr>
     </thead>
     <tbody>
@@ -25,7 +24,6 @@
                       <td><?= $article['title'] ?></td>
                       <td><?= $article['description'] ?></td>
                       <td><?= $article['status'] ?></td>
-                      <td><?= $article['score'] ?></td>
                         <?php
                           echo"<td><a href='editor/". $article['article_id'] ."' class='btn btn-default' role='button'>upravit příspěvek</a></td>";
                           echo"<td><a href='article/" . $article['url'] . "/remove' class='btn btn-default' role='button'>Odstranit</a></td>";

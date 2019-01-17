@@ -14,10 +14,10 @@ footer{
     padding-top: 10px;
     padding-bottom: 300px;
 }
-
+/* 
 header{
     background: #BFD8D2;
-}
+} */
 
 a{
     color: rgb(97, 72, 17) !important;
@@ -35,6 +35,22 @@ a:hover, a:active, a:focus{
     color: white !important;
     border: none;
     box-shadow: 0px 3px 0px 0px #888888;
+    border-radius: 5px !important;
+}
+
+.btn-info{
+    background: rgb(181, 234, 255);
+    color: rgb(73, 1, 1) !important;
+    border: none;
+    box-shadow: 0px 3px 0px 0px #888888;
+    border-radius: 5px !important;
+}
+
+.btn-danger{
+    background: rgb(73, 1, 1) !important;
+    color: rgb(245, 210, 210) !important;
+    border: none;
+    box-shadow: 0px 3px 0px 0px #888888 !important;
     border-radius: 5px !important;
 }
 
@@ -100,3 +116,25 @@ html {
 input[type="file"] {
     display: none !important;
 } */
+
+html {
+    font-size: 1rem;
+  }
+  
+  @include media-breakpoint-up(sm) {
+    html {
+      font-size: 1.2rem;
+    }
+  }
+  
+  @include media-breakpoint-up(md) {
+    html {
+      font-size: 1.4rem;
+    }
+  }
+  
+  @include media-breakpoint-up(lg) {
+    html {
+      font-size: 1.6rem;
+    }
+  }

@@ -14,7 +14,15 @@ class MyReviewsController extends Controller {
         
         if (!empty($params[0]) && $params[0] == 'prepare') {
             $article_id = $params[1];
-            $this->redirect('reviewEditor/' . $article_id);
+            $this->redirect('reviewEditor/prepare/' . $article_id);
+        }
+        else if(!empty($params[0]) && $params[0] == 'edit') {
+            $article_id = $params[1];
+            $this->redirect('reviewEditor/edit/' . $article_id);
+        }
+        else if(!empty($params[0]) && $params[0] == 'remove') {
+            $article_id = $params[1];
+            $this->redirect('reviewEditor/remove/' . $article_id);
         }
 
         $user = $userManager->getUser();

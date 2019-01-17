@@ -26,8 +26,13 @@ Pro vykonání změny daného článku (přidání recenzentů, odebírání rec
                       <td>
                         <?php 
                           $user = ( $userManager = new UserManager())->getUserById($article['FK_user_id']);
-                          echo $user['username'];
-                        ?>
+                          if ($user) {
+                            echo $user['username'];
+                          }
+                          else {
+                            echo '(odebraný uživatel)';
+                          }
+                          ?>
                       </td>
                       
                       <td><a href="article/<?= $article['url'] ?>"><?= $article['title'] ?></a></td>
@@ -96,55 +101,48 @@ Pro vykonání změny daného článku (přidání publikování, odmítnutí) j
       <th scope="col">Jméno autora</th>
       <th scope="col">Článek</th>
       <?php for($j = 1; $j < $max_count + 1; $j++) : ?>
-        <th scope="col">Recenzent <?=$j?></th>
+        <th scope="col">Recenze <?=$j?></th>
       <?php endfor; ?>
       <th scope="col"></th>
-        <!-- <th scope="col">Smazat</th> -->
       </tr>
     </thead>
     <tbody>
       <?php foreach ($articles as $article) : ?>
-      <?php if ($article['status'] != 'schvaleno') : ?>
+      <?php if ($article['status'] == 'čeká na rozhodnutí administrátora') : ?>
           <tr align="center">
                       <th scope="row"><?php echo $i++;?> </th>
 
                       <td>
                         <?php 
                           $user = ( $userManager = new UserManager())->getUserById($article['FK_user_id']);
-                          echo $user['username'];
+                          if ($user) {
+                            echo $user['username'];
+                          }
+                          else {
+                            echo '(odebraný uživatel)';
+                          }
                         ?>
                       </td>
-                      
+
+
+
                       <td><a href="article/<?= $article['url'] ?>"><?= $article['title'] ?></a></td>
 
-                      <form method="post">
-                      <?php for($j = 1; $j < $article['reviewer_count'] + 1; $j++) : ?>
-                        <td>
-                        <input type="hidden" name="count" value="<?= $article['reviewer_count'] ?>">
-                        <input type="hidden" name="article_id" value="<?= $article['article_id'] ?>">
-                            <select class="form-control" name="reviewers[]" id="reviewer_id">
-                                  <?php
-                                    $ids = explode("_", $article['reviewers_ids']);
-                                    $cur = (new UserManager())->getUserById($ids[$j - 1]);
-                                  ?>
 
-                                <?php if ($cur['status'] == 'recenzent') :?>
-                                <option value="<?= $cur['user_id']?>">
-                                    <?=$cur['username']?>
-                                </option>
-                                <?php endif; ?>
-                              <?php foreach ($reviewers as $reviewer) : ?>
-                              
-                              <?php
-                                    if ($reviewer['user_id'] != $cur['user_id']) : ?>
-                                <option value="<?= $reviewer['user_id']?>">
-                                     <?=$reviewer['username']?>
-                                </option>
-                              <?php endif; ?>
-                              <?php endforeach; ?>
-                            </select>
-                        </td>
-                      <?php endfor; ?>
+
+
+                      <?php for($j = 0; $j < $article['reviewer_count']; $j++) {
+
+                        $ids = explode("_", $article['reviewers_ids']);
+                        $cur = (new UserManager())->getUserById($ids[$j]);
+                        $review = (new ReviewManager())->getReviewByReviewer($cur['user_id']);
+                        if ($review['review_id'])
+                        echo "<td><a href='review/" . $review['review_id'] . "' class='btn btn-info' role='button'>otevřít</a></td>";
+                        else 
+                        echo "<td><a href='reviews/" . $review['review_id'] . "' class='btn btn-dark' role='button'>otevřít</a></td>";
+                      }
+                            
+                       ?>
                       
                       <?php
                           echo"<td><a href='reviews/publish/" . $article['article_id'] . "' class='btn btn-default' role='button'>Publikovat</a></td>";

@@ -10,12 +10,14 @@ class ReviewsController extends Controller {
 
         $articleManager = new ArticleManager();
         $userManager = new UserManager();
+        $reviewManager = new ReviewManager();
 
         $articles = $articleManager->getArticles();
         $this->data['reviewers'] = $userManager->getAllReviewers();
         $this->data['max_count'] = ($articleManager->getMaxRev())[0];
         $this->data['articles'] = $articles;
         $this->view = 'reviews';
+        $this->data['reviews'] = $reviewManager->getReviews();
 
         if (isset($_POST['reviewers'])) {
             $articleManager->updateReviewers($_POST['reviewers'], $_POST['count'], $_POST['article_id']);
@@ -30,6 +32,14 @@ class ReviewsController extends Controller {
         else if(!empty($params[0]) && $params[0] == 'remove') {
             $articleManager->updateRevCount($params[2], false);
             $this->redirect('reviews');
+        }
+        else if(!empty($params[0]) && $params[0] == 'publish') {
+            $articleManager->setPublished($params[1]);
+            $articleManager->raiseState($params[1]);
+            $this->redirect('home');
+        }
+        else if(!empty($params[0]) && $params[0] == 'decline') {
+            $articleManager->lowerState($params[1]);
         }
     }
 }

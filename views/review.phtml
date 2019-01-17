@@ -1,0 +1,25 @@
+<header>
+
+    <h3>Recenze ke článku <a href="article/<?= $article['url'] ?>"><?= '"' . $article['title'] . '"' ?></a></h3>
+</header>
+<hr>
+<table class="table table-bordered table-striped table-hover" >
+    <tbody>
+  <tr>
+    <td>Celkové skóre: </td>
+    <td><?= $score ?></td>
+  <tr>
+  <tr>
+    <td>Skóre za jazykovou stránku:</td>
+    <td><?= $lingvistic ?></td>
+  </tr>
+  <tr>
+    <td>Skóre za tehnickou stránku:</td>
+    <td><?= $technical ?></td>
+  </tr>
+  <tr>
+    <td>Poznámky:</td>
+    <td> <?= $_notes ?></td>
+  </tr>
+</tbody>
+<table>

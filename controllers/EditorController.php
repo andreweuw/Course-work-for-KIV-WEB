@@ -58,16 +58,10 @@ public function process($params) {
 
             if ($bufferedArticle) {
                 $article = $bufferedArticle;
-            }      
-            else {
-                $this->addMessage('params[1]: ' . $params[1]);
-             }                     
+            }
         }
 
-
-
         $this->data['article'] = $article;
-
         $this->view = 'editor';
     }
     
