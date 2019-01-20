@@ -1,12 +1,16 @@
 <?php
 
+/**
+ * Stránka recenzí jednotlivého recenzenta
+ */
 class MyReviewsController extends Controller {
 
     public function process($params) {
         $this->header = array(
-            'title' => 'Moje příspěvky',
-            'description' => 'Tato stránka je určena k prohlédnutí příspěvků uživatele v roli autora.',
-            'keywords' => 'prohlidnuti, autor, review, prispevek, prispevky');
+            'title' => 'Moje recenze',
+            'description' => 'Tato stránka je určena k prohlédnutí recenzí uživatele v roli recenzenta.',
+            'keywords' => 'prohlednuti, review, recenze'
+        );
 
         $reviewManager = new ReviewManager();
         $userManager = new UserManager();
@@ -16,11 +20,11 @@ class MyReviewsController extends Controller {
             $article_id = $params[1];
             $this->redirect('reviewEditor/prepare/' . $article_id);
         }
-        else if(!empty($params[0]) && $params[0] == 'edit') {
+        else if (!empty($params[0]) && $params[0] == 'edit') {
             $article_id = $params[1];
             $this->redirect('reviewEditor/edit/' . $article_id);
         }
-        else if(!empty($params[0]) && $params[0] == 'remove') {
+        else if (!empty($params[0]) && $params[0] == 'remove') {
             $article_id = $params[1];
             $this->redirect('reviewEditor/remove/' . $article_id);
         }

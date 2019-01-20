@@ -1,12 +1,15 @@
 <?php
 
+/**
+ * Články jednotlivého autora
+ */
 class MyArticlesController extends Controller {
 
     public function process($params) {
         $this->header = array(
             'title' => 'Moje příspěvky',
             'description' => 'Tato stránka je určena k prohlédnutí příspěvků uživatele v roli autora.',
-            'keywords' => 'prohlidnuti, autor, review, prispevek, prispevky');
+            'keywords' => 'prohlednuti, autor, review, prispevek, prispevky');
 
         $articleManager = new ArticleManager();
         $userManager = new UserManager();
@@ -18,8 +21,6 @@ class MyArticlesController extends Controller {
             $articleManager->deletePdf($article['file_name']);
             $this->redirect('editor');
         }
-
-
 
         $articles = $articleManager->getMyArticles($user['user_id']);
         $this->data['articles'] = $articles;

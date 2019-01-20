@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Error
+ */
 class ErrorController extends Controller {
 
     public function process($params) {

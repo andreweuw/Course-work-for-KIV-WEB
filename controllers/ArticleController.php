@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Jednotlivé články
+ */
 class ArticleController extends Controller {
 
     public function process($params) {

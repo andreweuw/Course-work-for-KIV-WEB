@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Stránka registrace
+ */
 class RegistrationController extends Controller {
 
     public function process($params) {

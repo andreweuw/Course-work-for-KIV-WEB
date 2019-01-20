@@ -9,13 +9,20 @@
         poškozeného, je z hlediska českého trestního práva nedovolené a je posuzováno 
         jako vražda.
     </p>
-    <div class="blockquote-footer"><small>From https://cs.wikipedia.org/wiki/Eutanazie</small></div>
+    <div class="blockquote-footer">
+        <small>
+            From https://cs.wikipedia.org/wiki/Eutanazie
+        </small>
+    </div>
 </blockquote>
 </p>
 <p>Pojďme se o této problematice pobavit v otevřeném online fóru.</p>
 <hr>
 <div class="container text-center">  
-<h3 align="center">Čerstvé publikace</h3> <br>
+<h3 align="center">
+    Čerstvé publikace
+</h3>
+<br>
 <?php foreach($articles as $article) : ?>
 <?php $counter = 0; ?>
 
@@ -25,21 +32,22 @@
 <?php else: ?>
     <div class="col-sm-4">
 <?php endif; ?>
-
     <a href="article/<?= $article['url'] ?>">
-      <h3><p><?=$article['title']?></p></h3>
-        </a>
-      <p>
-           <?php 
+        <h3>
+            <p>
+                <?=$article['title']?>
+            </p>
+        </h3>
+    </a>
+    <p>
+        <?php 
             $articleManager = new ArticleManager();
             $abstract = $articleManager->getAbstract($article['article_id']);
             $text = $abstract[0];
             echo $text[0];
-           ?>
-        </p>
+        ?>
+    </p>
     </div>
 </div><br>
-
 <?php endforeach; ?>
-
 </div>

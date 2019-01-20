@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Posílání mailu
+ */
 class ContactController extends Controller {
 
     public function process($params) {

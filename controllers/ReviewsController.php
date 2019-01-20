@@ -1,11 +1,14 @@
 <?php
 
+/**
+ * Stránka pro administrátora, je na ní možné editoat práva uživatelů, nebo publikovat/ odmítat příspěvky
+ */
 class ReviewsController extends Controller {
 
     public function process($params) {
         $this->header = array(
             'title' => 'Editace uživatelských práv',
-            'description' => 'Tato stránka je určena k editaci uživatelských práv jiných uživatlů.',
+            'description' => 'Tato stránka je určena k editaci uživatelských práv jiných uživatlů a publikování nebo odmítání příspěvků.',
             'keywords' => 'editace, edit, uzivatele, users, admin, prava, status');
 
         $articleManager = new ArticleManager();
@@ -28,7 +31,6 @@ class ReviewsController extends Controller {
             $articleManager->updateRevCount($params[2], true);
             $this->redirect('reviews');
         }
-
         else if(!empty($params[0]) && $params[0] == 'remove') {
             $articleManager->updateRevCount($params[2], false);
             $this->redirect('reviews');

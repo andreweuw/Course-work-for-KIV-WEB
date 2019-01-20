@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Třída je určena k zajištění připojení k dané databázi a následné zacházení s ní
+ */
 class DBWrapper {
 
     private static $connection;
@@ -11,9 +14,9 @@ class DBWrapper {
     );
 
     /**
-     * Creates an instace of PDO with standard connection parameters
-     * and stores it in a static variable $connection.
-     * It also prevents further connection.
+     * Vytvoří instanci PDO se standardními parametry
+     * a uloží ji ve statické proměnné $connection.
+     * Taktéž zabraňuje dalšímu připojení.
      */
     public static function connect($host, $user, $password, $database) {
         if (!isset(self::$connection)) {
@@ -27,7 +30,7 @@ class DBWrapper {
     }
 
     /**
-     * Returns one single row of the database
+     * Vrátí řádek databáze v závislosti na dotaze
      */
     public static function getRow($query, $params = array()) {
         $ret = self::$connection->prepare($query);
@@ -36,7 +39,7 @@ class DBWrapper {
     }
 
     /**
-     * Returns all the rows of the database
+     * Vrátí všechny řádky databáze podle dotazu
      */
     public static function getAllRows($query, $params = array()) {
         $ret = self::$connection->prepare($query);
@@ -45,7 +48,7 @@ class DBWrapper {
     }
 
     /**
-     * Returns one single column of the database
+     * Vrátí jeden sloupec databáze v závislosti na dotazu
      */
     public static function getColumn($query, $params = array()) {
         $result = self::getRow($query, $params);
@@ -53,7 +56,7 @@ class DBWrapper {
     }
 
     /**
-     * Returns te number of edited rows
+     * Provede dotaz a vrátí počet ovlivněných řádků
      */
     public static function query($query, $params = array()) {
         $ret = self::$connection->prepare($query);
@@ -61,6 +64,9 @@ class DBWrapper {
         return $ret->rowCount();
     }
 
+    /**
+     * Přidá do dané tabulky její jednu položku
+     */
     public static function add($table, $params = array()) {
         return self::query("INSERT INTO `$table` (`".
                             implode('`, `', array_keys($params)).
@@ -69,6 +75,9 @@ class DBWrapper {
         );
     }
 
+    /**
+     * Upraví řádek podle dané podmínky dané tabulky na dané pole parametrů
+     */
     public static function alter($table, $values = array(), $condition, $params = array()) {   
         return self::query("UPDATE `$table` SET `".
                             implode('` = ?, `', array_keys($values)).
@@ -77,10 +86,9 @@ class DBWrapper {
         );
     }
 
-    public static function getLastId() {
-        return self::$connection->lastInsertedId();
-    }
-
+    /**
+     * Provede manuální aktualizaci tabulky
+     */
     public static function update($table) {
         return self::query("UPDATE * FROM `?`", $table);
     }

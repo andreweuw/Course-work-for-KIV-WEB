@@ -1,13 +1,22 @@
 <?php
 
+/**
+ * Třída slouží ke komunikaci s tabulkou 'users'
+ */
 class UserManager {
 
+    /**
+     * Vrátí hashovou funkci pro dané heslo
+     */
     public function getHash($pass) {
         // Also adds salt (additional random string)
         // so that the password is not weak.
         return password_hash($pass, PASSWORD_DEFAULT);
     }
 
+    /**
+     * Pokud spolu hesla souhlasí, přidá nového uživatele do tabulky
+     */
     public function register($name, $pass, $passAgain) {
         if ($pass != $passAgain) {
             throw new UserError('Zadaná hesla spolu nesouhlasí.');
@@ -26,6 +35,9 @@ class UserManager {
         }
     }
 
+    /**
+     * Blokuje/odblokuje daného uživatele v závislosti na parametru $val (true/false)
+     */
     public function block($id, $val) {
         $controller = new UsersController();
         if (DBWrapper::query("UPDATE users SET `blocked` = ? WHERE user_id = ?", array($val, $id)) > 0) {
@@ -37,6 +49,9 @@ class UserManager {
         
     }
 
+    /**
+     * Pokud to jde, zvýší danému uživateli hodnost
+     */
     public function raiseRank($id) {
         $controller = new UsersController();
         $user = DBWrapper::getRow('
@@ -63,6 +78,9 @@ class UserManager {
         }
     }
 
+    /**
+     * Pokud to jde, sníží danému uživateli hodnost
+     */
     public function lowerRank($id) {
         $controller = new UsersController();
         $user = DBWrapper::getRow('
@@ -79,7 +97,6 @@ class UserManager {
         } else if ($status == 'autor') {
             $nextRank = null;
         }
-        // public static function alter($table, $values = array(), $condition, $params = array()) {  
         if ($nextRank) {
             DBWrapper::query("UPDATE users SET `status` = ? WHERE user_id = ?", array($nextRank, $id));
             $controller->addMessage('Uživatel s id '. $id . ' byl úspěšně zbaven dřívější funkce');
@@ -89,6 +106,9 @@ class UserManager {
         }
     }
 
+    /**
+     * Pokud to jde, přihlásí daného uživatele a vloží ho do $_SESSION['user] proměnné
+     */
     public function login($name, $pass) {
         $user = DBWrapper::getRow('
                 SELECT user_id, username, password, status, blocked 
@@ -102,10 +122,16 @@ class UserManager {
         $_SESSION['user'] = $user;
     }
 
+    /**
+     * Odhlásí daného uživatele
+     */
     public function logout() {
         unset($_SESSION['user']);
     }
 
+    /**
+     * Vrátí aktuálního uživatele
+     */
     public function getUser() {
         if (isset($_SESSION['user'])) {
             return $_SESSION['user'];
@@ -113,6 +139,9 @@ class UserManager {
         return null;
     }
 
+    /**
+     * Vrátí uživatele podle daného id
+     */
     public function getUserById($id) {
         return DBWrapper::getRow('
             SELECT * 
@@ -122,6 +151,9 @@ class UserManager {
         );
     }
 
+    /**
+     * Vrátí všechny uživatele
+     */
     public function getAllUsers() {
         return DBWrapper::getAllRows('
             SELECT * 
@@ -130,6 +162,9 @@ class UserManager {
         ');
     }
 
+    /**
+     * Vrátí všechny uživatele, kteří mají ve statusu napsáno, že jsou recenzent
+     */
     public function getAllReviewers() {
         return DBWrapper::getAllRows('
             SELECT * 
@@ -139,6 +174,9 @@ class UserManager {
         ', array('recenzent'));
     }
 
+    /**
+     * Vymaže uživatele podle daného id
+     */
     public function deleteUser($id) {
         $controller = new UsersController();
         DBWrapper::query('

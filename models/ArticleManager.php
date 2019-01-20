@@ -1,11 +1,20 @@
 <?php
 
+/**
+ * Třída pro zacházení s tabulkou 'articles'
+ */
 class ArticleManager {
     
+    /**
+     * Přidá článek
+     */
     public function addArticle($params = array()) {
         return DBWrapper::add('articles', $params);
     }
 
+    /**
+     * Vrátí článek podle dané url adresy
+     */
     public function getArticle($url) {
         return DBWrapper::getRow('
             SELECT * 
@@ -15,6 +24,9 @@ class ArticleManager {
         );
     }
 
+    /**
+     * Vrátí článek podle daného id článku
+     */
     public function getArticleById($id) {
         return DBWrapper::getRow('
             SELECT * 
@@ -24,6 +36,9 @@ class ArticleManager {
         );
     }
 
+    /**
+     * Vrátí všechny články z tabulky
+     */
     public function getArticles() {
         return DBWrapper::getAllRows('
             SELECT * 
@@ -32,6 +47,9 @@ class ArticleManager {
         ');
     }
 
+    /**
+     * Vrátí všechny ty články, které byly zveřejněny.
+     */
     public function getAllPublished() {
         return DBWrapper::getAllRows('
             SELECT * 
@@ -41,6 +59,9 @@ class ArticleManager {
             ');
     }
 
+    /**
+     * Vrátí všechny články uživatele s daným id uživatele
+     */
     public function getMyArticles($id) {
         return DBWrapper::getAllRows('
             SELECT * 
@@ -51,6 +72,9 @@ class ArticleManager {
         );
     }
 
+    /**
+     * Vrátí největší počet recenzentů ze všech článků
+     */
     public function getMaxRev() {
         return DBWrapper::getRow('
             SELECT MAX(reviewer_count) 
@@ -58,17 +82,26 @@ class ArticleManager {
             FROM articles;');
     }
 
+    /**
+     * Nahraje daný pdf soubor do podadresáře /articles/
+     */
     public function uploadPdf($fileName, $fileTmpName) {
         $uploaddir = $_SERVER['DOCUMENT_ROOT']."/articles/";
         $uploadfile = $uploaddir . basename($fileName);
         move_uploaded_file($fileTmpName, $uploadfile);
     }
 
+    /**
+     * Nastaví artibut 'published' daného článku na hodnotu 'true'
+     */
     public function setPublished($id) {
         $nextRank = true;
         DBWrapper::query("UPDATE articles SET `published` = ? WHERE article_id = ?", array($nextRank, $id));
     }
 
+    /**
+     * Stáhne uživateli soubor pdf z dané cesty pomocí protokolu FTP na lokální úložiště uživatele
+     */
     public function downloadPdf($path) {
         if (file_exists($path)) {
             $file = $path;
@@ -84,6 +117,9 @@ class ArticleManager {
         }
     }
 
+    /**
+     * Zvýší stav článku.
+     */
     public function raiseState($id) {
         $article = DBWrapper::getRow('
             SELECT * 
@@ -103,6 +139,9 @@ class ArticleManager {
         }
     }
 
+    /**
+     * Sníží stav článku
+     */
     public function lowerState($id) {
         $article = DBWrapper::getRow('
             SELECT * 
@@ -120,13 +159,18 @@ class ArticleManager {
         }
     }
     
+    /**
+     * Aktualizuje danému článku atributy 'reviewers_ids' a 'reviewer_count' na základě hodnot předaného pole $reviewers
+     */
     public function updateReviewers($reviewers = array(), $count, $id) {
         $reviewers_ids = $reviewers[0];
+        // Pouze pro výpis
         $articleController = new ArticleController();
         foreach(array_slice($reviewers, 1) as $reviewer) {
             $reviewers_ids .= ("_" . $reviewer);
         }
 
+        // výpis recenzentů končí prázdným recenzentem
         if (substr($reviewers_ids, -1) === "_") {
             $articleController->addMessage("Musíte nejdříve vybrat nového nebo odebrat prázdnou kolonku pro recenzenta.");
         }
@@ -137,6 +181,9 @@ class ArticleManager {
         }
     }
 
+    /**
+     * Zvýší hodnotu 'reviewer_count' v tabulce článků danému článku o 1, nebo -1 v závislosti na parametru $plus
+     */
     public function updateRevCount($id, $plus) {
         $article = $this->getArticleById($id);
         $new = $article['reviewer_count'];
@@ -149,6 +196,9 @@ class ArticleManager {
         DBWrapper::query("UPDATE articles SET `reviewer_count` = ? WHERE article_id = ?", array($new, $id));
     }
 
+    /**
+     * Vrátí abstract daného článku v závislosti na jeho id
+     */
     public function getAbstract($id) {
         return DBWrapper::getAllRows("
             SELECT abstract 
@@ -157,6 +207,10 @@ class ArticleManager {
         );
     }
 
+    /**
+     * Uloží daný článek do databáze, přehlednější způsob předání parametrů by byl polem!
+     * Pokud takový článek již existuje, vymaže se a přidá se tento, nový
+     */
     public function saveArticle($title, $url, $abstract, $description, $keywords, $file_name) {
         $article = $this->getArticle($url);
         if ($article) {
@@ -186,17 +240,26 @@ class ArticleManager {
         }
     }
 
+    /**
+     * Vymaže článek z databáze na základě jeho id
+     */
     public function deleteArticle($id) {
         DBWrapper::query('
             DELETE FROM articles WHERE article_id = ? 
         ', array($id));
     }
 
+    /**
+     * Vymaže článek z lokálního serveru, podadresáře /articles/
+     */
     public function deletePdf($fileName) {
         $directory = $_SERVER['DOCUMENT_ROOT']."/articles/";
         unlink($directory . $fileName);
     }
 
+    /**
+     * Vrátí všechny články, které obsahují dané id jako podřetězec atributu 'reviewers_ids'
+     */
     public function getArticlesForReview($id) {
         return DBWrapper::getAllRows("
             SELECT * 

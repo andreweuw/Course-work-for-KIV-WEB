@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Stánka jednotlivé recenze
+ */
 class ReviewController extends Controller {
 
     public function process($params) {

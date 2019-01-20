@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Domovská stránka
+ */
 class HomeController extends Controller {
 
     public function process($params) {

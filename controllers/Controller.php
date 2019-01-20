@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Základní kontroler
+ */
 abstract class Controller {
 
     protected $data = array();
@@ -8,6 +11,9 @@ abstract class Controller {
 
     abstract function process($params);
 
+    /**
+     * Přesměruje do daného pohledu, který musí mít každý kontroler nadefinován
+     */
     public function printView() {
         if ($this->view) {
             extract($this->entitize($this->data));
@@ -17,6 +23,9 @@ abstract class Controller {
         }
     }
 
+    /**
+     * Přesměruje na danou url adresu
+     */
     public function redirect($url) {
         header("Location: /$url");
         header("Connection: close");
@@ -45,6 +54,9 @@ abstract class Controller {
         }
     }
 
+    /**
+     * Přidá zprávu do systému zpráv
+     */
     public function addMessage($message) {
         if (isset($_SESSION['messages'])) {
             $_SESSION['messages'][] = $message;
@@ -54,6 +66,9 @@ abstract class Controller {
         }
     }
 
+    /**
+     * Vrátí všechny zprávy ze stytému zpráv
+     */
     public static function getMessages() {
         if (isset($_SESSION['messages'])) {
             $messages = $_SESSION['messages'];

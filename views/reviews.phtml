@@ -111,7 +111,6 @@ Pro vykonání změny daného článku (přidání publikování, odmítnutí) j
       <?php if ($article['status'] == 'čeká na rozhodnutí administrátora') : ?>
           <tr align="center">
                       <th scope="row"><?php echo $i++;?> </th>
-
                       <td>
                         <?php 
                           $user = ( $userManager = new UserManager())->getUserById($article['FK_user_id']);
@@ -123,24 +122,18 @@ Pro vykonání změny daného článku (přidání publikování, odmítnutí) j
                           }
                         ?>
                       </td>
-
-
-
                       <td><a href="article/<?= $article['url'] ?>"><?= $article['title'] ?></a></td>
-
-
-
-
-                      <?php for($j = 0; $j < $article['reviewer_count']; $j++) {
-
-                        $ids = explode("_", $article['reviewers_ids']);
-                        $cur = (new UserManager())->getUserById($ids[$j]);
-                        $review = (new ReviewManager())->getReviewByReviewer($cur['user_id']);
-                        if ($review['review_id'])
-                        echo "<td><a href='review/" . $review['review_id'] . "' class='btn btn-info' role='button'>otevřít</a></td>";
-                        else 
-                        echo "<td><a href='reviews/" . $review['review_id'] . "' class='btn btn-dark' role='button'>otevřít</a></td>";
-                      }
+                      <?php 
+                        for ($j = 0; $j < $article['reviewer_count']; $j++) {
+                          $ids = explode("_", $article['reviewers_ids']);
+                          $cur = (new UserManager())->getUserById($ids[$j]);
+                          $review = (new ReviewManager())->getReviewByReviewer($cur['user_id']);
+                          
+                          if ($review['review_id'])
+                            echo "<td><a href='review/" . $review['review_id'] . "' class='btn btn-info' role='button'>otevřít</a></td>";
+                          else 
+                            echo "<td><a href='reviews/" . $review['review_id'] . "' class='btn btn-dark' role='button'>otevřít</a></td>";
+                        }
                             
                        ?>
                       

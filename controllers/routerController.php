@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Router rozhoduje o přesměrování na konkrétní stránku, nebo chybu.
+ */
 class RouterController extends Controller {
 
     protected $controller;
@@ -38,6 +41,9 @@ class RouterController extends Controller {
         $this->view = 'layout';
     }
 
+    /**
+     * Vrátí jednotlivé parametry URL po escapovacích znacích '/'
+     */
     private function parseURL($url) {
         $parsedURL = parse_url($url);
         $parsedURL["path"] = ltrim($parsedURL["path"], "/");
@@ -46,6 +52,9 @@ class RouterController extends Controller {
         return $disconnectedPath;
     }
 
+    /**
+     * Převede tuto-adresu na tutoAdresu
+     */
     private function dashToCamel($text) {
         $str = str_replace('-', ' ', $text);
         $str = ucwords($str);

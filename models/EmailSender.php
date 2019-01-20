@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Třída poskytuje 2 metody pro posílání emailu
+ */
 class EmailSender {
     
+    /**
+     * Čisté poslání emailu
+     */
     public function send($toWhom, $subject, $message, $from) {
         $header = "From: " . $from;
         $header .= "\nMIME-Version: 1.0\n";
@@ -11,6 +17,9 @@ class EmailSender {
         }
     }
 
+    /**
+     * Posílání emailu s kontolou spamu
+     */
     public function sendWithAntispam($year, $toWhom, $subject, $message, $from) {
         if ($year != date("Y")) {
             throw new UserError('Nesprávně vyplněný antispam.');

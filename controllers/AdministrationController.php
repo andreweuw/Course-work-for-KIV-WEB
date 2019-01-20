@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Uživatelský administrace
+ */
 class AdministrationController extends Controller
 {
     public function process($params)

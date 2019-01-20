@@ -1,9 +1,11 @@
 <?php
 
-class EditorController extends Controller {
-    
+/**
+ * Editor článků
+ */
+class EditorController extends Controller {    
 
-public function process($params) {
+    public function process($params) {
         $this->header = array(
             'title' => 'Editor článků',
             'keywords' => 'Tato stránka je určena k editaci a vytváření článků.',

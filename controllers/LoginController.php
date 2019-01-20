@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Stránka přihlášení
+ */
 class LoginController extends Controller {
 
     public function process($params) {
@@ -7,7 +10,6 @@ class LoginController extends Controller {
         if ($userManager->getUser()) {
             $this->redirect('administration');
         } 
-        // Hlavička stránky
         $this->header = array(
             'title' => 'Přihlášení',
             'description' => 'Tato stránka je určena k přihlášení uživatele.',
@@ -24,7 +26,6 @@ class LoginController extends Controller {
                 $this->addMessage($error->getMessage());
             }
         }
-        // Nastavení šablony
         $this->view = 'login';
     }
 }

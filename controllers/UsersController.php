@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Just for showing all the users
+* Promítání všech uživatelů v databázi
 */
 class UsersController extends Controller {
 

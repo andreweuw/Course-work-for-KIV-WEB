@@ -1,9 +1,12 @@
 <?php
 
+/**
+ * Stránka editoru recenzí
+ */
 class ReviewEditorController extends Controller {
     
 
-public function process($params) {
+    public function process($params) {
         $this->header = array(
             'title' => 'Editor recenzí',
             'keywords' => 'Tato stránka je určena k editaci a vytváření recenzí.',
@@ -47,14 +50,11 @@ public function process($params) {
                 'reviewer_id' => $user['user_id']
             );
             
-
-            
             $reviewManager->saveReview($review);
-
 
             $this->redirect('myReviews');
         }
-        // Je zadané URL článku k editaci
+
         $this->data['review'] = $review;
         $this->view = 'reviewEditor';
     }
